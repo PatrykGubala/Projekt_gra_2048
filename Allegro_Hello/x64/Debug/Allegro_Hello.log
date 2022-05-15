@@ -1,5 +1,4 @@
 ﻿  Allegro_Hello.c
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(380,28): warning C4101: "klawiatura": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(262): warning C4715: "wygrana”: niewszystkie ścieżki kodu zwracają wartość
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(280): warning C4715: "przegrana”: niewszystkie ścieżki kodu zwracają wartość
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(445,28): warning C4101: "klawiatura": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(345): warning C4715: "przegrana”: niewszystkie ścieżki kodu zwracają wartość
   Allegro_Hello.vcxproj -> C:\Users\patry\source\repos\podst_progr\Allegro_Hello\x64\Debug\Allegro_Hello.exe

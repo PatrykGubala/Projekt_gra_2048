@@ -112,6 +112,69 @@ void random_1(int t[4][4]) //losuje 2 wspolrzedne i wstawia w nie '2'
 }
 
 
+
+void compress(int t[4][4])
+{
+    int tempTab[4][4] =
+    { 0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0 };
+
+    for (int i = 0; i < 4; i++)
+    {
+        int pos = 0;
+        for (int j = 0; j < 4; j++)
+        {
+            if (t[i][j] != 0)
+            {
+                tempTab[i][pos] = t[i][j];
+                pos += 1;
+                printf("test");
+                print(tempTab);
+            }
+        }
+    }
+    printf("test 2\n");
+    print(tempTab);
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            t[i][j] = tempTab[i][j];
+        }
+    }
+
+
+    printf("test 2.1\n");
+
+    print(t);
+
+
+}
+
+
+void merge(int t[4][4])
+{
+    int tempTab[4][4] =
+    { 0,0,0,0,
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0,0 };
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 3; j++) {
+
+            if (t[i][j] == t[i][j + 1] && t[i][j] != 0) {
+                t[i][j] += t[i][j];
+                t[i][j + 1] = 0;
+            }
+
+        }
+    }
+
+}
+
+
 void down(int t[4][4])
 {
     for (int x = 0; x < 4; x++)
@@ -175,6 +238,7 @@ void up(int t[4][4])
 
 
 }
+
 
 
 void left(int t[4][4])
@@ -257,6 +321,7 @@ bool wygrana(int t[4][4])
 
         }
     }
+    return false;
 
 
 }
@@ -437,7 +502,17 @@ int main()
 
                 break;
             case ALLEGRO_KEY_LEFT:
-                left(t);
+                printf("main test 2.1\n");
+                print(t);
+                compress(t);
+                printf("main test 2.2\n");
+                print(t);
+                merge(t);
+                printf("main test 2.3\n");
+                print(t);
+                compress(t);
+                printf("main test 2.4\n");
+                print(t);
                 random_1(t);
 
                 break;
@@ -506,3 +581,4 @@ int main()
     return 0;
 
 }
+
