@@ -169,6 +169,7 @@ void merge(int t[4][4], bool * changed)
         for (int j = 0; j < 3; j++) {
 
             if (t[i][j] == t[i][j + 1] && t[i][j] != 0) {
+                wynik = wynik + t[i][j];
                 t[i][j] += t[i][j];
                 t[i][j + 1] = 0;
                 *changed = true;
@@ -229,8 +230,11 @@ void reverse(int t[4][4])
 }
 
 
-void isMoveValid(int t[4][4])
+bool isMoveValid( bool **operation(int *))
 {
+    if (operation == true)
+        return true;
+    return false;
 
 }
 
@@ -503,6 +507,33 @@ bool przegrana(int t[4][4])
 }
 
 
+bool isGameLost(int t[4][4])
+{
+    int tempTab[4][4] = { 0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0 };
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            tempTab[i][j]= t[i][j] ;
+        }
+    }
+    if (isMoveValid(right2(tempTab)) == false) {
+        if (isMoveValid(left2(tempTab)) == false) {
+            if (isMoveValid(up2(tempTab)) == false) {
+                if (isMoveValid(down2(tempTab)) == false) {
+                    return true;
+
+                }
+            }
+        }
+    }
+        return false;
+    
+}
+
 
 struct color
 {
@@ -628,7 +659,7 @@ int main()
             al_destroy_event_queue(event_queue);
 
         }
-        if (przegrana(t) == true)
+        if (isGameLost(t) == true)
         {
             al_destroy_display(display);
             al_destroy_event_queue(event_queue);
