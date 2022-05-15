@@ -1,4 +1,13 @@
 ﻿  Allegro_Hello.c
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(445,28): warning C4101: "klawiatura": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(345): warning C4715: "przegrana”: niewszystkie ścieżki kodu zwracają wartość
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(305,25): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(308,22): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(311,25): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(329,24): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(332,22): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(335,25): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(352,25): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(355,22): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(358,25): warning C4133: "funkcja": niezgodne typy - od "int *" do "bool *"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(603,28): warning C4101: "klawiatura": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(503): warning C4715: "przegrana”: niewszystkie ścieżki kodu zwracają wartość
   Allegro_Hello.vcxproj -> C:\Users\patry\source\repos\podst_progr\Allegro_Hello\x64\Debug\Allegro_Hello.exe

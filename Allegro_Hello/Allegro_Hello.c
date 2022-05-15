@@ -113,7 +113,7 @@ void random_1(int t[4][4]) //losuje 2 wspolrzedne i wstawia w nie '2'
 
 
 
-void compress(int t[4][4])
+void compress(int t[4][4], bool * changed )
 {
     int tempTab[4][4] =
     { 0,0,0,0,
@@ -130,13 +130,70 @@ void compress(int t[4][4])
             {
                 tempTab[i][pos] = t[i][j];
                 pos += 1;
-                printf("test");
-                print(tempTab);
+                //printf("test");
+                //print(tempTab);
             }
         }
     }
-    printf("test 2\n");
-    print(tempTab);
+    //printf("test 2\n");
+    //print(tempTab);
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (t[i][j] != tempTab[i][j])
+            {
+                t[i][j] = tempTab[i][j];
+                *changed = true;
+            }
+            
+        }
+    }
+
+
+    //printf("test 2.1\n");
+
+    //print(t);
+
+
+}
+
+
+void merge(int t[4][4], bool * changed)
+{
+    int tempTab[4][4] ={ 0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0 };
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 3; j++) {
+
+            if (t[i][j] == t[i][j + 1] && t[i][j] != 0) {
+                t[i][j] += t[i][j];
+                t[i][j + 1] = 0;
+                *changed = true;
+            }
+
+        }
+    }
+
+}
+
+void transpose(int t[4][4])
+{
+    int tempTab[4][4] = { 0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0 };
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+
+            tempTab[i][j] = t[j][i];
+            
+
+        }
+    }
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -145,32 +202,35 @@ void compress(int t[4][4])
         }
     }
 
-
-    printf("test 2.1\n");
-
-    print(t);
-
-
 }
 
 
-void merge(int t[4][4])
+void reverse(int t[4][4])
 {
-    int tempTab[4][4] =
-    { 0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0 };
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 3; j++) {
+    int tempTab[4][4] = { 0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0,
+                        0,0,0,0 };
 
-            if (t[i][j] == t[i][j + 1] && t[i][j] != 0) {
-                t[i][j] += t[i][j];
-                t[i][j + 1] = 0;
-            }
-
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            tempTab[i][j] = t[i][3 - j];
         }
     }
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            t[i][j] = tempTab[i][j];
+        }
+    }
+}
+
+
+void isMoveValid(int t[4][4])
+{
 
 }
 
@@ -207,6 +267,104 @@ void down(int t[4][4])
 
 }
 
+
+bool down2(int t[4][4])
+{
+    bool changed = false;
+    transpose(t);
+    reverse(t);
+    printf("main test 2.1\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.2\n");
+    print(t);
+    merge(t, &changed);
+    printf("main test 2.3\n");
+    print(t);
+    compress(t,&changed);
+    printf("main test 2.4\n");
+    print(t);
+    reverse(t);
+    transpose(t);
+    printf("changed? %d", changed);
+    if (changed == true) {
+        random_1(t);
+        return true;
+    }
+    return false;
+
+
+}
+
+bool up2(int t[4][4])
+{
+    int changed= false;
+    transpose(t);
+    printf("main test 2.1\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.2\n");
+    print(t);
+    merge(t, &changed);
+    printf("main test 2.3\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.4\n");
+    print(t);
+    transpose(t);
+    if (changed == true) {
+        random_1(t);
+        return true;
+    }
+    return false;
+}
+
+bool right2(int t[4][4])
+{
+    int changed = false;
+
+    reverse(t);
+    printf("main test 2.1\n");
+    print(t);
+    compress(t,&changed);
+    printf("main test 2.2\n");
+    print(t);
+    merge(t, &changed);
+    printf("main test 2.3\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.4\n");
+    print(t);
+    reverse(t);
+    if (changed == true) {
+        random_1(t);
+        return true;
+    }
+    return false;
+}
+
+bool left2(int t[4][4])
+{
+    int changed = false;
+
+    printf("main test 2.1\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.2\n");
+    print(t);
+    merge(t, &changed);
+    printf("main test 2.3\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.4\n");
+    print(t);
+    if (changed == true) {
+        random_1(t);
+        return true;
+    }
+    return false;
+}
+/*
 void up(int t[4][4])
 {
     for (int x = 0; x < 4; x++)
@@ -239,7 +397,7 @@ void up(int t[4][4])
 
 }
 
-
+*/
 
 void left(int t[4][4])
 {
@@ -487,33 +645,19 @@ int main()
             switch (events.keyboard.keycode)
             {
             case ALLEGRO_KEY_DOWN:
-                down(t);
-                random_1(t);
+                down2(t);
 
                 break;
             case ALLEGRO_KEY_UP:
-                up(t);
-                random_1(t);
+                up2(t);
 
                 break;
             case ALLEGRO_KEY_RIGHT:
-                right(t);
-                random_1(t);
+                right2(t);
 
                 break;
             case ALLEGRO_KEY_LEFT:
-                printf("main test 2.1\n");
-                print(t);
-                compress(t);
-                printf("main test 2.2\n");
-                print(t);
-                merge(t);
-                printf("main test 2.3\n");
-                print(t);
-                compress(t);
-                printf("main test 2.4\n");
-                print(t);
-                random_1(t);
+               left2(t);
 
                 break;
             case ALLEGRO_KEY_ESCAPE:
