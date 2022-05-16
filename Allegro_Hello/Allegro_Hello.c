@@ -282,16 +282,16 @@ bool left2(int t[4][4])
 {
     bool changed = false;
 
-    printf("main test 2.1\n");
+    printf("Lmain test 2.1\n");
     print(t);
     compress(t, &changed);
-    printf("main test 2.2\n");
+    printf("Lmain test 2.2\n");
     print(t);
     merge(t, &changed);
-    printf("main test 2.3\n");
+    printf("Lmain test 2.3\n");
     print(t);
     compress(t, &changed);
-    printf("main test 2.4\n");
+    printf("Lmain test 2.4\n");
     print(t);
     if (changed == true) {
         //random_1(t);
@@ -307,16 +307,16 @@ bool right2(int t[4][4])
     bool changed = false;
 
     reverse(t);
-    printf("main test 2.1\n");
+    printf("Rmain test 2.1\n");
     print(t);
     compress(t, &changed);
-    printf("main test 2.2\n");
+    printf("Rmain test 2.2\n");
     print(t);
     merge(t, &changed);
-    printf("main test 2.3\n");
+    printf("Rmain test 2.3\n");
     print(t);
     compress(t, &changed);
-    printf("main test 2.4\n");
+    printf("Rmain test 2.4\n");
     print(t);
     reverse(t);
     if (changed == true) {
@@ -366,16 +366,16 @@ bool up2(int t[4][4])
 {
     bool changed= false;
     transpose(t);
-    printf("main test 2.1\n");
+    printf("Umain test 2.1\n");
     print(t);
     compress(t, &changed);
-    printf("main test 2.2\n");
+    printf("Umain test 2.2\n");
     print(t);
     merge(t, &changed);
-    printf("main test 2.3\n");
+    printf("Umain test 2.3\n");
     print(t);
     compress(t, &changed);
-    printf("main test 2.4\n");
+    printf("Umain test 2.4\n");
     print(t);
     transpose(t);
     if (changed == true) {
