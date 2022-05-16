@@ -17,6 +17,9 @@
 
 double wynik = 0;
 
+enum{left, right, down, up};
+
+
 
 void fill(int t[4][4]) //tworzenie tablicy
 {
@@ -159,8 +162,9 @@ void compress(int t[4][4], bool * changed )
 }
 
 
-void merge(int t[4][4], bool * changed)
+int merge(int t[4][4], bool * changed)
 {
+    int wynik2 = 0;
     int tempTab[4][4] ={ 0,0,0,0,
                         0,0,0,0,
                         0,0,0,0,
@@ -177,6 +181,7 @@ void merge(int t[4][4], bool * changed)
 
         }
     }
+   
 
 }
 
@@ -238,7 +243,7 @@ bool isMoveValid( bool **operation(int *))
 
 }
 
-
+/*
 void down(int t[4][4])
 {
     for (int x = 0; x < 4; x++)
@@ -270,6 +275,8 @@ void down(int t[4][4])
 
 
 }
+*/
+
 
 
 bool down2(int t[4][4])
@@ -292,7 +299,7 @@ bool down2(int t[4][4])
     transpose(t);
     printf("changed? %d", changed);
     if (changed == true) {
-        random_1(t);
+        //random_1(t);
         return true;
     }
     return false;
@@ -302,7 +309,7 @@ bool down2(int t[4][4])
 
 bool up2(int t[4][4])
 {
-    int changed= false;
+    bool changed= false;
     transpose(t);
     printf("main test 2.1\n");
     print(t);
@@ -317,7 +324,7 @@ bool up2(int t[4][4])
     print(t);
     transpose(t);
     if (changed == true) {
-        random_1(t);
+        //random_1(t);
         return true;
     }
     return false;
@@ -325,7 +332,7 @@ bool up2(int t[4][4])
 
 bool right2(int t[4][4])
 {
-    int changed = false;
+    bool changed = false;
 
     reverse(t);
     printf("main test 2.1\n");
@@ -341,7 +348,7 @@ bool right2(int t[4][4])
     print(t);
     reverse(t);
     if (changed == true) {
-        random_1(t);
+        //random_1(t);
         return true;
     }
     return false;
@@ -349,7 +356,7 @@ bool right2(int t[4][4])
 
 bool left2(int t[4][4])
 {
-    int changed = false;
+    bool changed = false;
 
     printf("main test 2.1\n");
     print(t);
@@ -363,10 +370,20 @@ bool left2(int t[4][4])
     printf("main test 2.4\n");
     print(t);
     if (changed == true) {
-        random_1(t);
+        //random_1(t);
         return true;
     }
     return false;
+}
+
+
+
+void move( int t[4][4],bool** operation(int *))
+{
+    if (operation(t) == true)
+        random_1(t);
+    return;
+       
 }
 /*
 void up(int t[4][4])
@@ -402,7 +419,7 @@ void up(int t[4][4])
 }
 
 */
-
+/*
 void left(int t[4][4])
 {
     for (int x = 0; x < 4; x++)
@@ -470,7 +487,7 @@ void right(int t[4][4])
 
 }
 
-
+*/
 
 bool wygrana(int t[4][4])
 {
@@ -676,19 +693,19 @@ int main()
             switch (events.keyboard.keycode)
             {
             case ALLEGRO_KEY_DOWN:
-                down2(t);
+                move(t,down2);
 
                 break;
             case ALLEGRO_KEY_UP:
-                up2(t);
+                move(t, up2);
 
                 break;
             case ALLEGRO_KEY_RIGHT:
-                right2(t);
+                move(t, right2);
 
                 break;
             case ALLEGRO_KEY_LEFT:
-               left2(t);
+                move(t, left2);
 
                 break;
             case ALLEGRO_KEY_ESCAPE:
