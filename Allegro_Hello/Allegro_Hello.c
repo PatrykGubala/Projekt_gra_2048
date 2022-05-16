@@ -17,7 +17,7 @@
 
 double wynik = 0;
 
-enum{left, right, down, up};
+enum move{left, right, down, up, none};
 
 
 
@@ -278,11 +278,34 @@ void down(int t[4][4])
 */
 
 
-
-bool down2(int t[4][4])
+bool left2(int t[4][4])
 {
     bool changed = false;
-    transpose(t);
+
+    printf("main test 2.1\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.2\n");
+    print(t);
+    merge(t, &changed);
+    printf("main test 2.3\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test 2.4\n");
+    print(t);
+    if (changed == true) {
+        //random_1(t);
+        return true;
+    }
+    return false;
+}
+
+
+
+bool right2(int t[4][4])
+{
+    bool changed = false;
+
     reverse(t);
     printf("main test 2.1\n");
     print(t);
@@ -292,7 +315,39 @@ bool down2(int t[4][4])
     merge(t, &changed);
     printf("main test 2.3\n");
     print(t);
+    compress(t, &changed);
+    printf("main test 2.4\n");
+    print(t);
+    reverse(t);
+    if (changed == true) {
+        //random_1(t);
+        return true;
+    }
+    return false;
+}
+
+
+
+
+bool down2(int t[4][4])
+{
+    bool changed = false;
+    transpose(t);
+    printf("main test transpose\n");
+    print(t);
+    reverse(t);
+    printf("main test reverse\n");
+    print(t);
+    compress(t, &changed);
+    printf("main test compress\n");
+    print(t);
+    merge(t, &changed);
+    printf("main test merge\n");
+    print(t);
+   
     compress(t,&changed);
+    printf("main test compress\n");
+    print(t);
     printf("main test 2.4\n");
     print(t);
     reverse(t);
@@ -330,51 +385,6 @@ bool up2(int t[4][4])
     return false;
 }
 
-bool right2(int t[4][4])
-{
-    bool changed = false;
-
-    reverse(t);
-    printf("main test 2.1\n");
-    print(t);
-    compress(t,&changed);
-    printf("main test 2.2\n");
-    print(t);
-    merge(t, &changed);
-    printf("main test 2.3\n");
-    print(t);
-    compress(t, &changed);
-    printf("main test 2.4\n");
-    print(t);
-    reverse(t);
-    if (changed == true) {
-        //random_1(t);
-        return true;
-    }
-    return false;
-}
-
-bool left2(int t[4][4])
-{
-    bool changed = false;
-
-    printf("main test 2.1\n");
-    print(t);
-    compress(t, &changed);
-    printf("main test 2.2\n");
-    print(t);
-    merge(t, &changed);
-    printf("main test 2.3\n");
-    print(t);
-    compress(t, &changed);
-    printf("main test 2.4\n");
-    print(t);
-    if (changed == true) {
-        //random_1(t);
-        return true;
-    }
-    return false;
-}
 
 
 
@@ -382,7 +392,7 @@ void move( int t[4][4],bool** operation(int *))
 {
     if (operation(t) == true)
         random_1(t);
-    return;
+    
        
 }
 /*
@@ -664,7 +674,7 @@ int main()
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
-
+    
     while (!done)
     {
         ALLEGRO_EVENT events;
@@ -678,14 +688,15 @@ int main()
         }
         if (isGameLost(t) == true)
         {
+            done = true;
             al_destroy_display(display);
             al_destroy_event_queue(event_queue);
 
         }
 
 
-
-
+        
+        enum move key=none;
 
         if (events.type == ALLEGRO_EVENT_KEY_DOWN)
         {
@@ -693,28 +704,45 @@ int main()
             switch (events.keyboard.keycode)
             {
             case ALLEGRO_KEY_DOWN:
-                move(t,down2);
+                key = down;
+               // move(t,down2);
 
                 break;
             case ALLEGRO_KEY_UP:
-                move(t, up2);
+                key = up;
+               // move(t, up2);
 
                 break;
             case ALLEGRO_KEY_RIGHT:
-                move(t, right2);
+                key = right;
+                //move(t, right2);
 
                 break;
             case ALLEGRO_KEY_LEFT:
-                move(t, left2);
+                key = left;
+                //move(t, left2);
 
                 break;
             case ALLEGRO_KEY_ESCAPE:
                 done = true;
                 random_1(t);
                 break;
+            default:
+                
+                break;
             }
 
         }
+        if (key == left)
+            move(t, left2);      
+        else if (key == right)       
+            move(t, right2);
+        
+        else if (key == down)
+            move(t, down2);
+        else if (key == up)
+            move(t, up2);
+
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
