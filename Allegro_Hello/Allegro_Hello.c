@@ -162,7 +162,7 @@ void compress(int t[4][4], bool * changed )
 }
 
 
-int merge(int t[4][4], bool * changed)
+int merge(int t[4][4], bool * changed,int *localScore )
 {
     int wynik2 = 0;
     int tempTab[4][4] ={ 0,0,0,0,
@@ -173,7 +173,7 @@ int merge(int t[4][4], bool * changed)
         for (int j = 0; j < 3; j++) {
 
             if (t[i][j] == t[i][j + 1] && t[i][j] != 0) {
-                wynik = wynik + t[i][j];
+                *localScore +=  t[i][j];
                 t[i][j] += t[i][j];
                 t[i][j + 1] = 0;
                 *changed = true;
@@ -235,13 +235,7 @@ void reverse(int t[4][4])
 }
 
 
-bool isMoveValid( bool **operation(int *))
-{
-    if (operation == true)
-        return true;
-    return false;
 
-}
 
 /*
 void down(int t[4][4])
@@ -278,21 +272,22 @@ void down(int t[4][4])
 */
 
 
-bool left2(int t[4][4])
+bool left2(int t[4][4], int* localScore)
 {
     bool changed = false;
-
-    printf("Lmain test 2.1\n");
-    print(t);
+    
+   // printf("Lmain test 2.1\n");
+   // print(t);
     compress(t, &changed);
-    printf("Lmain test 2.2\n");
-    print(t);
-    merge(t, &changed);
-    printf("Lmain test 2.3\n");
-    print(t);
+    //printf("Lmain test 2.2\n");
+   // print(t);
+    merge(t, &changed, *&localScore);
+   
+   // printf("Lmain test 2.3\n");
+   // print(t);
     compress(t, &changed);
-    printf("Lmain test 2.4\n");
-    print(t);
+   // printf("Lmain test 2.4\n");
+   // print(t);
     if (changed == true) {
         //random_1(t);
         return true;
@@ -302,22 +297,23 @@ bool left2(int t[4][4])
 
 
 
-bool right2(int t[4][4])
+bool right2(int t[4][4], int* localScore)
 {
     bool changed = false;
-
+    
     reverse(t);
-    printf("Rmain test 2.1\n");
-    print(t);
+    //printf("Rmain test 2.1\n");
+    //print(t);
     compress(t, &changed);
-    printf("Rmain test 2.2\n");
-    print(t);
-    merge(t, &changed);
-    printf("Rmain test 2.3\n");
-    print(t);
+   // printf("Rmain test 2.2\n");
+    //print(t);
+    merge(t, &changed, *&localScore);
+    
+    //printf("Rmain test 2.3\n");
+    //print(t);
     compress(t, &changed);
-    printf("Rmain test 2.4\n");
-    print(t);
+    //printf("Rmain test 2.4\n");
+    //print(t);
     reverse(t);
     if (changed == true) {
         //random_1(t);
@@ -329,30 +325,32 @@ bool right2(int t[4][4])
 
 
 
-bool down2(int t[4][4])
+bool down2(int t[4][4], int* localScore)
 {
     bool changed = false;
+    
     transpose(t);
-    printf("main test transpose\n");
-    print(t);
+    //printf("main test transpose\n");
+    //print(t);
     reverse(t);
-    printf("main test reverse\n");
-    print(t);
+   // printf("main test reverse\n");
+    //print(t);
     compress(t, &changed);
-    printf("main test compress\n");
-    print(t);
-    merge(t, &changed);
-    printf("main test merge\n");
-    print(t);
+   // printf("main test compress\n");
+   // print(t);
+    merge(t, &changed, *&localScore);
+    
+   // printf("main test merge\n");
+   // print(t);
    
     compress(t,&changed);
-    printf("main test compress\n");
-    print(t);
-    printf("main test 2.4\n");
-    print(t);
+   // printf("main test compress\n");
+    //print(t);
+    //printf("main test 2.4\n");
+    //print(t);
     reverse(t);
     transpose(t);
-    printf("changed? %d", changed);
+    //printf("changed? %d", changed);
     if (changed == true) {
         //random_1(t);
         return true;
@@ -362,21 +360,23 @@ bool down2(int t[4][4])
 
 }
 
-bool up2(int t[4][4])
+bool up2(int t[4][4], int * localScore)
 {
     bool changed= false;
+ 
     transpose(t);
-    printf("Umain test 2.1\n");
-    print(t);
+    //printf("Umain test 2.1\n");
+    //print(t);
     compress(t, &changed);
-    printf("Umain test 2.2\n");
-    print(t);
-    merge(t, &changed);
-    printf("Umain test 2.3\n");
-    print(t);
+    //printf("Umain test 2.2\n");
+    //print(t);
+    merge(t, &changed, *&localScore);
+    
+   // printf("Umain test 2.3\n");
+    //print(t);
     compress(t, &changed);
-    printf("Umain test 2.4\n");
-    print(t);
+   // printf("Umain test 2.4\n");
+    //print(t);
     transpose(t);
     if (changed == true) {
         //random_1(t);
@@ -385,14 +385,24 @@ bool up2(int t[4][4])
     return false;
 }
 
-
-
-
-void move( int t[4][4],bool** operation(int *))
+bool isMoveValid(bool** operation(int*))
 {
-    if (operation(t) == true)
+    if (*operation == true)
+        return true;
+    return false;
+
+}
+
+
+void move( int t[4][4],bool** operation(int *, int *))
+{
+    int score=0;
+    if (operation(t, &score) == true) {
         random_1(t);
-    
+        wynik += score;
+
+    }
+        
        
 }
 /*
@@ -498,7 +508,6 @@ void right(int t[4][4])
 }
 
 */
-
 bool wygrana(int t[4][4])
 {
     for (int i = 0; i < 4; i++)
@@ -547,10 +556,12 @@ bool isGameLost(int t[4][4])
             tempTab[i][j]= t[i][j] ;
         }
     }
-    if (isMoveValid(right2(tempTab)) == false) {
-        if (isMoveValid(left2(tempTab)) == false) {
-            if (isMoveValid(up2(tempTab)) == false) {
-                if (isMoveValid(down2(tempTab)) == false) {
+    //puts("\\\n  test  \\\\n");
+    int wynik2=0;
+    if (isMoveValid(right2(tempTab,&wynik2)) == false) {
+        if (isMoveValid(left2(tempTab, &wynik2)) == false) {
+            if (isMoveValid(up2(tempTab, &wynik2)) == false) {
+                if (isMoveValid(down2(tempTab, wynik2)) == false) {
                     return true;
 
                 }
@@ -607,7 +618,7 @@ int main()
 
     fill(t);
     random_2(t);
-    print(t);
+   // print(t);
 
 
 
@@ -672,13 +683,15 @@ int main()
     al_install_keyboard();
 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+    //ALLEGRO_EVENT_QUEUE* event_display_queue = al_create_event_queue();
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-
-    
+    //al_register_event_source(event_display_queue, al_get_display_event_source(display));
     while (!done)
     {
         ALLEGRO_EVENT events;
+       // ALLEGRO_EVENT events2;
         al_wait_for_event(event_queue, &events);
+       // al_wait_for_event(event_display_queue, &events2);
 
         if (wygrana(t) == true)
         {
@@ -725,7 +738,7 @@ int main()
                 break;
             case ALLEGRO_KEY_ESCAPE:
                 done = true;
-                random_1(t);
+               
                 break;
             default:
                 
@@ -733,6 +746,7 @@ int main()
             }
 
         }
+       
         if (key == left)
             move(t, left2);      
         else if (key == right)       
@@ -792,7 +806,7 @@ int main()
 
         al_flip_display();
         al_clear_to_color(al_map_rgb(213, 196, 161));
-        print(t);
+        //print(t);
     }
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
