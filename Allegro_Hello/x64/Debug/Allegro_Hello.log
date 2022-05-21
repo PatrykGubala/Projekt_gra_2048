@@ -1,31 +1,31 @@
 ﻿  Allegro_Hello.c
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(390,27): warning C4047: "==": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "int"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(400,20): warning C4047: "funkcja": "int *" różni się w poziomach operatorów pośrednich od "int (*)[4]"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(400,19): warning C4024: "operation": różne typy dla formalnego i rzeczywistego parametru 1
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(400,37): warning C4047: "==": "bool **" różni się w poziomach operatorów pośrednich od "int"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(561,44): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(561,27): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(562,48): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(562,30): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(563,50): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(563,32): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(564,54): warning C4047: "funkcja": "int *" różni się w poziomach operatorów pośrednich od "int"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(564,48): warning C4024: "down2": różne typy dla formalnego i rzeczywistego parametru 2
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(564,55): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(564,38): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(751,26): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(751,26): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(751,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(753,27): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(753,27): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(753,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(756,26): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(756,26): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(756,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(758,24): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(758,24): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(758,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(672,28): warning C4101: "klawiatura": lokalna zmienna, do której nie istnieje odwołanie
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(186): warning C4716: "merge": musi zwracać wartość
-C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(543): warning C4715: "przegrana”: niewszystkie ścieżki kodu zwracają wartość
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(35,2): warning C4091: "typedef ": zignorowano na lewo od "gameScore" podczas gdy brak deklaracji zmiennej
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(403,27): warning C4047: "==": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(413,20): warning C4047: "funkcja": "int *" różni się w poziomach operatorów pośrednich od "int (*)[4]"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(413,19): warning C4024: "operation": różne typy dla formalnego i rzeczywistego parametru 1
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(413,37): warning C4047: "==": "bool **" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(574,44): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(574,27): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(575,48): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(575,30): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(576,50): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(576,32): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(577,54): warning C4047: "funkcja": "int *" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(577,48): warning C4024: "down2": różne typy dla formalnego i rzeczywistego parametru 2
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(577,55): warning C4047: "funkcja": "bool **(__cdecl *)(int *)" różni się w poziomach operatorów pośrednich od "bool"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(577,38): warning C4024: "isMoveValid": różne typy dla formalnego i rzeczywistego parametru 1
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1080,26): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1080,26): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1080,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1082,27): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1082,27): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1082,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1085,26): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1085,26): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1085,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1087,24): warning C4113: "bool (__cdecl *)(int (*)[4],int *)" różni się listami parametrów od "bool **(__cdecl *)(int *,int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1087,24): warning C4047: "funkcja": "bool **(__cdecl *)(int *,int *)" różni się w poziomach operatorów pośrednich od "bool (__cdecl *)(int (*)[4],int *)"
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(1087,21): warning C4024: "move": różne typy dla formalnego i rzeczywistego parametru 2
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(199): warning C4716: "merge": musi zwracać wartość
+C:\Users\patry\source\repos\podst_progr\Allegro_Hello\Allegro_Hello\Allegro_Hello.c(556): warning C4715: "przegrana”: niewszystkie ścieżki kodu zwracają wartość
   Allegro_Hello.vcxproj -> C:\Users\patry\source\repos\podst_progr\Allegro_Hello\x64\Debug\Allegro_Hello.exe
