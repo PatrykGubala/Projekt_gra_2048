@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#define _CRT_SECURE_NO_WARNINGS
+//#define _CRT_SECURE_NO_WARNINGS
 
 #include <allegro5/allegro.h>
 
@@ -899,6 +899,7 @@ int main()
     ALLEGRO_DISPLAY* finishDisplay = NULL; //wskaznik do okna konca gry
     ALLEGRO_FONT* fontWYNIK = al_create_builtin_font(); //wskaznik do czcionki 'WYNIK'
     ALLEGRO_FONT* fontWART_WYNIK = al_create_builtin_font();  //wskaznik do czcionki 'WARTOSC WYNIKU'
+    ALLEGRO_FONT* score_board_font = al_create_builtin_font();  //wskaznik do czcionki 'WARTOSC WYNIKU'
     ALLEGRO_MONITOR_INFO info;
     al_get_monitor_info(0, &info);
     res_x_comp = info.x2 - info.x1;
@@ -1005,7 +1006,7 @@ int main()
             writeFile(gameScores);
             al_clear_to_color(getColor(0));
             for (int i = 0; i < 10; i++)
-                al_draw_textf(F10, al_map_rgb(0, 0, 0), game_width / 2, i * game_width / 50, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
+                al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, i * game_width / 50, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
             al_flip_display();
 
             al_rest(10.0);
@@ -1051,16 +1052,29 @@ int main()
 
                 done = true;
                 printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
-                updateRankingArray(gameScores, localScore);
-                writeFile(gameScores);
+                
 
 
                 al_clear_to_color(getColor(0));
+                al_draw_text(score_board_font,al_map_rgb_f(0, 0,0), game_width / 2, game_height / 2,ALLEGRO_ALIGN_CENTER,"G A M E  O V E R");
+                printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+
+                al_draw_textf(score_board_font,al_map_rgb_f(0, 0,0), game_width / 2, game_height / 2+game_height/20,ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+                al_flip_display();
+                updateRankingArray(gameScores, localScore);
+                writeFile(gameScores);
+
+                al_rest(3.0);
+                al_clear_to_color(getColor(0));
+                al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, 0, ALLEGRO_ALIGN_CENTER, "LEADERBOARD");
+
                 for (int i=0; i<10;i++)
-                    al_draw_textf(F10, al_map_rgb(0, 0, 0),game_width/2, i * game_width / 50, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
+                    al_draw_textf(score_board_font, al_map_rgb(0, 0, 0),game_width/2, (i+1) * game_height / 10-game_height/20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
                 al_flip_display();
                
-                al_rest(10.0);
+                al_rest(15.0);
+                
+
                 break;
                
             default:

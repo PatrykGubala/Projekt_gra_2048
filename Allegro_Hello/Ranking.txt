@@ -1,3 +1,4 @@
+SCORE: 994	 TIMER: 1 min 72 sec
 SCORE: 44	 TIMER: 0 min 15 sec
 SCORE: 38	 TIMER: 0 min 11 sec
 SCORE: 22	 TIMER: 0 min 4 sec
@@ -7,4 +8,3 @@ SCORE: 16	 TIMER: 0 min 2 sec
 SCORE: 16	 TIMER: 0 min 6 sec
 SCORE: 12	 TIMER: 0 min 2 sec
 SCORE: 12	 TIMER: 0 min 3 sec
-SCORE: 12	 TIMER: 0 min 16 sec
