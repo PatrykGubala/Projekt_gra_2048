@@ -18,7 +18,10 @@
 
 double wynik = 0;
 
-enum move{left, right, down, up, none};
+enum move { left, right, down, up, none };
+
+enum game_status{play, ranking};
+
 
 struct color
 {
@@ -129,7 +132,7 @@ void random_1(int t[4][4]) //losuje 2 wspolrzedne i wstawia w nie '2'
 
 
 
-void compress(int t[4][4], bool * changed )
+void compress(int t[4][4], bool* changed)
 {
     int tempTab[4][4] =
     { 0,0,0,0,
@@ -162,7 +165,7 @@ void compress(int t[4][4], bool * changed )
                 t[i][j] = tempTab[i][j];
                 *changed = true;
             }
-            
+
         }
     }
 
@@ -175,10 +178,10 @@ void compress(int t[4][4], bool * changed )
 }
 
 
-int merge(int t[4][4], bool * changed,int *localScore )
+int merge(int t[4][4], bool* changed, int* localScore)
 {
     int wynik2 = 0;
-    int tempTab[4][4] ={ 0,0,0,0,
+    int tempTab[4][4] = { 0,0,0,0,
                         0,0,0,0,
                         0,0,0,0,
                         0,0,0,0 };
@@ -186,7 +189,7 @@ int merge(int t[4][4], bool * changed,int *localScore )
         for (int j = 0; j < 3; j++) {
 
             if (t[i][j] == t[i][j + 1] && t[i][j] != 0) {
-                *localScore +=  t[i][j];
+                *localScore += t[i][j];
                 t[i][j] += t[i][j];
                 t[i][j + 1] = 0;
                 *changed = true;
@@ -194,7 +197,7 @@ int merge(int t[4][4], bool * changed,int *localScore )
 
         }
     }
-   
+
 
 }
 
@@ -209,7 +212,7 @@ void transpose(int t[4][4])
         for (int j = 0; j < 4; j++) {
 
             tempTab[i][j] = t[j][i];
-            
+
 
         }
     }
@@ -250,57 +253,22 @@ void reverse(int t[4][4])
 
 
 
-/*
-void down(int t[4][4])
-{
-    for (int x = 0; x < 4; x++)
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                if (t[i][j] != 0 && t[i + 1][j] == 0)
-                {
-                    t[i + 1][j] = t[i][j];
-                    t[i][j] = 0;
-
-                }
-                if (t[i][j] != 0)
-                {
-                    if (t[i][j] == t[i + 1][j])
-                    {
-                        wynik = wynik + t[i][j];
-                        t[i + 1][j] = t[i + 1][j] * 2;
-                        t[i][j] = 0;
-
-
-                    }
-                }
-            }
-        }
-    }
-
-
-}
-*/
-
-
 bool left2(int t[4][4], int* localScore)
 {
     bool changed = false;
-    
-   // printf("Lmain test 2.1\n");
-   // print(t);
+
+    // printf("Lmain test 2.1\n");
+    // print(t);
     compress(t, &changed);
     //printf("Lmain test 2.2\n");
    // print(t);
     merge(t, &changed, *&localScore);
-   
-   // printf("Lmain test 2.3\n");
-   // print(t);
+
+    // printf("Lmain test 2.3\n");
+    // print(t);
     compress(t, &changed);
-   // printf("Lmain test 2.4\n");
-   // print(t);
+    // printf("Lmain test 2.4\n");
+    // print(t);
     if (changed == true) {
         //random_1(t);
         return true;
@@ -313,15 +281,15 @@ bool left2(int t[4][4], int* localScore)
 bool right2(int t[4][4], int* localScore)
 {
     bool changed = false;
-    
+
     reverse(t);
     //printf("Rmain test 2.1\n");
     //print(t);
     compress(t, &changed);
-   // printf("Rmain test 2.2\n");
-    //print(t);
+    // printf("Rmain test 2.2\n");
+     //print(t);
     merge(t, &changed, *&localScore);
-    
+
     //printf("Rmain test 2.3\n");
     //print(t);
     compress(t, &changed);
@@ -341,26 +309,26 @@ bool right2(int t[4][4], int* localScore)
 bool down2(int t[4][4], int* localScore)
 {
     bool changed = false;
-    
+
     transpose(t);
     //printf("main test transpose\n");
     //print(t);
     reverse(t);
-   // printf("main test reverse\n");
-    //print(t);
+    // printf("main test reverse\n");
+     //print(t);
     compress(t, &changed);
-   // printf("main test compress\n");
-   // print(t);
+    // printf("main test compress\n");
+    // print(t);
     merge(t, &changed, *&localScore);
-    
-   // printf("main test merge\n");
-   // print(t);
-   
-    compress(t,&changed);
-   // printf("main test compress\n");
-    //print(t);
-    //printf("main test 2.4\n");
-    //print(t);
+
+    // printf("main test merge\n");
+    // print(t);
+
+    compress(t, &changed);
+    // printf("main test compress\n");
+     //print(t);
+     //printf("main test 2.4\n");
+     //print(t);
     reverse(t);
     transpose(t);
     //printf("changed? %d", changed);
@@ -373,10 +341,10 @@ bool down2(int t[4][4], int* localScore)
 
 }
 
-bool up2(int t[4][4], int * localScore)
+bool up2(int t[4][4], int* localScore)
 {
-    bool changed= false;
- 
+    bool changed = false;
+
     transpose(t);
     //printf("Umain test 2.1\n");
     //print(t);
@@ -384,12 +352,12 @@ bool up2(int t[4][4], int * localScore)
     //printf("Umain test 2.2\n");
     //print(t);
     merge(t, &changed, *&localScore);
-    
-   // printf("Umain test 2.3\n");
-    //print(t);
+
+    // printf("Umain test 2.3\n");
+     //print(t);
     compress(t, &changed);
-   // printf("Umain test 2.4\n");
-    //print(t);
+    // printf("Umain test 2.4\n");
+     //print(t);
     transpose(t);
     if (changed == true) {
         //random_1(t);
@@ -407,120 +375,18 @@ bool isMoveValid(bool** operation(int*))
 }
 
 
-void move( int t[4][4],bool** operation(int *, int *))
+void move(int t[4][4], bool** operation(int*, int*))
 {
-    int score=0;
+    int score = 0;
     if (operation(t, &score) == true) {
         random_1(t);
         wynik += score;
 
     }
-        
-       
-}
-/*
-void up(int t[4][4])
-{
-    for (int x = 0; x < 4; x++)
-    {
-        for (int i = 3; i > 0; i--)
-        {
-            for (int j = 3; j >= 0; j--)
-            {
-                if (t[i][j] != 0 && t[i - 1][j] == 0)
-                {
-                    t[i - 1][j] = t[i][j];
-                    t[i][j] = 0;
-
-                }
-                if (t[i][j] != 0)
-                {
-                    if (t[i][j] == t[i - 1][j])
-                    {
-                        wynik = wynik + t[i][j];
-                        t[i - 1][j] = t[i - 1][j] * 2;
-                        t[i][j] = 0;
-
-
-                    }
-                }
-            }
-        }
-    }
 
 
 }
 
-*/
-/*
-void left(int t[4][4])
-{
-    for (int x = 0; x < 4; x++)
-    {
-        for (int i = 3; i >= 0; i--)
-        {
-            for (int j = 3; j > 0; j--)
-            {
-                if (t[i][j] != 0 && t[i][j - 1] == 0)
-                {
-                    t[i][j - 1] = t[i][j];
-                    t[i][j] = 0;
-
-                }
-                if (t[i][j] != 0)
-                {
-                    if (t[i][j] == t[i][j - 1])
-                    {
-                        wynik = wynik + t[i][j];
-                        t[i][j - 1] = t[i][j - 1] * 2;
-                        t[i][j] = 0;
-
-
-                    }
-                }
-            }
-        }
-    }
-
-
-}
-
-
-
-void right(int t[4][4])
-{
-    for (int x = 0; x < 4; x++)
-    {
-        for (int i = 0; i <= 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                if (t[i][j] != 0 && t[i][j + 1] == 0)
-                {
-                    t[i][j + 1] = t[i][j];
-                    t[i][j] = 0;
-
-                }
-                if (t[i][j] != 0)
-                {
-                    if (t[i][j] == t[i][j + 1])
-                    {
-                        wynik = wynik + t[i][j];
-                        t[i][j + 1] = t[i][j + 1] * 2;
-                        t[i][j] = 0;
-
-
-
-                    }
-                }
-            }
-        }
-    }
-
-
-}
-
-*/
 bool wygrana(int t[4][4])
 {
     for (int i = 0; i < 4; i++)
@@ -538,23 +404,6 @@ bool wygrana(int t[4][4])
 }
 
 
-bool przegrana(int t[4][4])
-{
-    int counter = 0;
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            if (t[i][j] != 0)
-                counter++;
-
-        }
-    }
-    if (counter == 16)
-        return true;
-
-}
-
 
 bool isGameLost(int t[4][4])
 {
@@ -566,12 +415,12 @@ bool isGameLost(int t[4][4])
     {
         for (int j = 0; j < 4; j++)
         {
-            tempTab[i][j]= t[i][j] ;
+            tempTab[i][j] = t[i][j];
         }
     }
     //puts("\\\n  test  \\\\n");
-    int wynik2=0;
-    if (isMoveValid(right2(tempTab,&wynik2)) == false) {
+    int wynik2 = 0;
+    if (isMoveValid(right2(tempTab, &wynik2)) == false) {
         if (isMoveValid(left2(tempTab, &wynik2)) == false) {
             if (isMoveValid(up2(tempTab, &wynik2)) == false) {
                 if (isMoveValid(down2(tempTab, wynik2)) == false) {
@@ -581,8 +430,8 @@ bool isGameLost(int t[4][4])
             }
         }
     }
-        return false;
-    
+    return false;
+
 }
 /*
 
@@ -592,16 +441,16 @@ void saveScoreBoard(int score, int gameTimeMin, int gameTimeSec)
     errno_t err;
     int localScore = 0, localGameTimeSec = 0, localGameTimeMin = 0;
     err = fopen_s(&fp, "Ranking.txt", "w+");
-    
+
 
 
     if (err!=0)
     {
         printf("The file 'Ranking.txt' was not opened");
-        
+
     }
-    
-    else 
+
+    else
     {
         printf("The file 'Ranking.txt' was opened");
 
@@ -613,15 +462,15 @@ void saveScoreBoard(int score, int gameTimeMin, int gameTimeSec)
         fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", 10, 11, 12);
         fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", 10, 11, 12);
 
-        
+
         fseek(fp, 0L, SEEK_SET);
         /*while (!feof(fp))
-        {  
-           
+        {
+
            //fscanf_s(fp, "SCORE: %d\t TIMER: %d min %d sec\n", &localScore, &localGameTimeMin, &localGameTimeSec);
            fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
 
-            
+
            printf("SCORE: %d\t TIMER: %d min %d sec\n", localScore, localGameTimeMin, localGameTimeSec);
            //printf("Pointer %d\n", fp);
             if (score > localScore)
@@ -630,14 +479,14 @@ void saveScoreBoard(int score, int gameTimeMin, int gameTimeSec)
                 //fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
 
                 //fscanf_s(fp, "SCORE: %d\t TIMER: %d min %d sec\n", &localScore, &localGameTimeMin, &localGameTimeSec);
-                
-                
+
+
                 //printf("SCORE: %d\t TIMER: %d min %d sec\n", localScore, localGameTimeMin, localGameTimeSec);
 
             }
 
         }
-        
+
         score = 15;
         gameTimeSec = 20;
         gameTimeMin = 15;
@@ -667,7 +516,7 @@ void saveScoreBoard(int score, int gameTimeMin, int gameTimeSec)
                     fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", 0, 0, 0);
                 }
                     //fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", localScore, localGameTimeMin, localGameTimeSec);
-                    
+
 
 
 
@@ -681,15 +530,15 @@ void saveScoreBoard(int score, int gameTimeMin, int gameTimeSec)
             }
             //fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
         }
-       
+
     }
     if (fp)
       fclose(fp);
-    
 
 
 
-    
+
+
 
 }
 
@@ -717,10 +566,10 @@ void writeFile(struct gameScore gameScoreArray[10])
     }
     for (int i = 0; i < 10; i++)
     {
-        fprintf_s(fp,"SCORE: %d\t TIMER: %d min %d sec\n", gameScoreArray[i].wynik, gameScoreArray[i].gameTimeMin, gameScoreArray[i].gameTimeSec);
+        fprintf_s(fp, "SCORE: %d\t TIMER: %d min %d sec\n", gameScoreArray[i].wynik, gameScoreArray[i].gameTimeMin, gameScoreArray[i].gameTimeSec);
     }
     fclose(fp);
-        
+
 
 }
 
@@ -755,9 +604,9 @@ void readeFile(struct gameScore gameScoreArray[10])
 
 void sortRankingArray(struct gameScore gameScoreArray[10])
 {
-    
 
-    for (int i = 0; i <9; i++)
+
+    for (int i = 0; i < 9; i++)
     {
         int min = i;
         for (int j = i + 1; j < 10; j++)
@@ -775,14 +624,14 @@ void sortRankingArray(struct gameScore gameScoreArray[10])
             gameScoreArray[i] = temp;
         }
     }
-    
+
 
 
 }
 
 void updateRankingArray(struct gameScore gameScoreArray[10], struct gameScore localScore)
 {
-    struct gameScore temp= {0,0,0};
+    struct gameScore temp = { 0,0,0 };
     for (int i = 0; i < 10; i++)
     {
         if (localScore.wynik > gameScoreArray[i].wynik)
@@ -793,7 +642,7 @@ void updateRankingArray(struct gameScore gameScoreArray[10], struct gameScore lo
             temp = gameScoreArray[i];
             gameScoreArray[i] = localScore;
             localScore = temp;
-            printf("i: %d wynik localScore %d", i , localScore.wynik);
+            printf("i: %d wynik localScore %d", i, localScore.wynik);
         }
         else if (localScore.wynik == gameScoreArray[i].wynik)
         {
@@ -815,10 +664,25 @@ void updateRankingArray(struct gameScore gameScoreArray[10], struct gameScore lo
                 gameScoreArray[i] = localScore;
                 localScore = temp;
             }
-                
+
         }
     }
 }
+
+
+void resetRanking(struct gameScore gameScoreArray[10])
+{
+    for (int i = 0; i < 10; i++)
+    {
+        gameScoreArray[i].wynik = 0;
+        gameScoreArray[i].gameTimeMin = 0;
+        gameScoreArray[i].gameTimeSec = 0;
+    }
+
+    writeFile(gameScoreArray);
+}
+
+
 
 
 
@@ -854,15 +718,48 @@ ALLEGRO_COLOR getColor(int value)
     }
 }
 
+
+
+void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_FONT* font)
+{
+    al_get_monitor_info(0, &info);
+    int res_x_comp = info.x2 - info.x1;
+    int res_y_comp = info.y2 - info.y1;
+    float game_height = (float)(res_y_comp / 2);
+    float game_width = (float)(res_x_comp / 4);
+    al_draw_line(3, 0, 3, game_width, al_map_rgb(0, 0, 0), 4); //rysujemy ramke
+    al_draw_line(game_width / 4, 0, game_width / 4, game_width, al_map_rgb(0, 0, 0), 3);
+    al_draw_line(game_width / 2, 0, game_width / 2, game_width, al_map_rgb(0, 0, 0), 3);
+    al_draw_line((game_width * 3 / 4), 0, game_width * 3 / 4, game_width, al_map_rgb(0, 0, 0), 3);
+    al_draw_line(game_width - 3, 0, game_width - 3, game_width, al_map_rgb(0, 0, 0), 4);
+
+
+
+
+    al_draw_line(3, 0, game_width - 3, 0, al_map_rgb(0, 0, 0), 6); //rysujemy ramke
+    al_draw_line(3, game_width / 4, game_width - 3, game_width / 4, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
+    al_draw_line(3, game_width * 3 / 4, game_width - 3, game_width * 3 / 4, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
+    al_draw_line(3, game_width / 2, game_width - 3, game_width / 2, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
+    al_draw_line(3, game_width, game_width - 3, game_width, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
+
+
+
+    al_draw_text(font, al_map_rgb(0, 0, 0), 2, game_width + game_height / 20, 0, "WYNIK:"); //wyswietla napis 'WYNIK'
+                //printf("Actual Time: %d min: %d sec",minutesPassed, secondsPassed);
+    al_draw_text(font, al_map_rgb(0, 0, 0), 2, game_width + game_height / 12, 0, "TIMER:"); //wyswietla napis 'TIMER'
+
+}
+
 int main()
 {
     int t[4][4];
 
     fill(t);
     random_2(t);
-   // print(t);
+    // print(t);
 
 
+    bool redraw = false;
 
 
 
@@ -882,9 +779,9 @@ int main()
     struct gameScore gameScores[10];
     readeFile(gameScores);
     struct gameScore localScore = { 0,0,0 };
-   
+
     writeFile(gameScores);
-   
+
     ALLEGRO_TIMER* timer = al_create_timer(1.0);
     //must_init(timer, "timer");
 
@@ -905,7 +802,7 @@ int main()
     res_x_comp = info.x2 - info.x1;
     res_y_comp = info.y2 - info.y1;
     float game_height = (float)(res_y_comp / 2);
-    float game_width =(float)(res_x_comp / 4);
+    float game_width = (float)(res_x_comp / 4);
     printf("resolution %d %d", res_x_comp, res_y_comp);
 
 
@@ -955,225 +852,290 @@ int main()
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
-   // timePassed = (int)al_get_timer_count(timer);
+    // timePassed = (int)al_get_timer_count(timer);
+    int actualTime = al_current_time(timer);
+
+
+    enum game_status GAME_MODE = play;
+
+
 
     while (!done)
-    {   
-        
+    {
+
+        enum move key = none;
 
         //printf("Actual Time: %d min: %d sec",minutesPassed, secondsPassed);
         ALLEGRO_EVENT events;
-       // ALLEGRO_EVENT events2;
+        // ALLEGRO_EVENT events2;
         al_wait_for_event(event_queue, &events);
-       // al_wait_for_event(event_display_queue, &events2);
-
-        if (events.type == ALLEGRO_EVENT_TIMER) {
-            timePassed += 1;
-            if ((int)timePassed % 60 == 0 )
-            {
-                printf("%d", timePassed%60);
-                minutesPassed += 1;
-                localScore.gameTimeMin += 1;
-                secondsPassed = 0;
-            }
-                
-            else
-            {
-                secondsPassed += 1;
-                localScore.gameTimeSec += 1;
-            }
-        }
        
-        if (wygrana(t) == true)
+
+
+        if (GAME_MODE == play)
+
+
         {
-            //saveScoreBoard(wynik, minutesPassed, secondsPassed);
-            updateRankingArray(gameScores, localScore);
-            writeFile(gameScores);
-            al_clear_to_color(getColor(0));
-            for (int i = 0; i < 10; i++)
-                al_draw_textf(F10, al_map_rgb(0, 0, 0), game_width / 2, i * game_width / 50, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
-            al_flip_display();
-
-            al_rest(10.0);
-            al_destroy_display(display);
-            al_destroy_event_queue(event_queue);
-
-        }
-        if (isGameLost(t) == true)
-        {
-            //saveScoreBoard(wynik, minutesPassed, secondsPassed);
-            updateRankingArray(gameScores, localScore);
-            writeFile(gameScores);
-            al_clear_to_color(getColor(0));
-            for (int i = 0; i < 10; i++)
-                al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, i * game_width / 50, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
-            al_flip_display();
-
-            al_rest(10.0);
-            done = true;
-            al_destroy_display(display);
-            al_destroy_event_queue(event_queue);
-
             
 
+            bool changeTime = false;
+            if (actualTime != (int)al_current_time(timer)) {
+                actualTime = (int)al_current_time(timer);
+                changeTime = true;
+            }
+
+            if (changeTime == true) {
+                timePassed += 1;
+                printf("%d", timePassed % 60);
+                if ((int)timePassed % 60 == 0)
+                {
+
+
+                    localScore.gameTimeMin += 1;
+
+                    localScore.gameTimeSec = 0;
+
+                }
+
+                else
+                {
+
+                    localScore.gameTimeSec += 1;
+                }
+            }
+
+            if (events.type == ALLEGRO_EVENT_KEY_DOWN)
+            {
+
+                switch (events.keyboard.keycode)
+                {
+                case ALLEGRO_KEY_DOWN:
+                    key = down;
+                    // move(t,down2);
+
+                    break;
+                case ALLEGRO_KEY_UP:
+                    key = up;
+                    // move(t, up2);
+
+                    break;
+                case ALLEGRO_KEY_RIGHT:
+                    key = right;
+                    //move(t, right2);
+
+                    break;
+                case ALLEGRO_KEY_LEFT:
+                    key = left;
+                    //move(t, left2);
+
+                    break;
+                case ALLEGRO_KEY_ESCAPE:
+                    //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+
+                   
+                    printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+
+
+
+                    al_clear_to_color(getColor(0));
+                    al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "G A M E  O V E R");
+                    printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+
+                    al_draw_textf(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2 + game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+                    al_flip_display();
+                    updateRankingArray(gameScores, localScore);
+                    writeFile(gameScores);
+
+                    al_rest(3.0);
+                    GAME_MODE = ranking;
+
+
+                    
+                    break;
+
+                default:
+
+                    break;
+                }
+
+            }
+            else if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+            {
+                done = true;
+
+                break;
+            }
+
+            if (key == left)
+                move(t, left2);
+            else if (key == right)
+                move(t, right2);
+
+            else if (key == down)
+                move(t, down2);
+            else if (key == up)
+                move(t, up2);
+
+            if (key == up || key == down || key == right || key == left)
+            {
+                if (wygrana(t) == true)
+                {
+                    //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                    al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "Y O U  W O N");
+                    printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+
+                    al_draw_textf(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2 + game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+                    al_flip_display();
+                    updateRankingArray(gameScores, localScore);
+                    writeFile(gameScores);
+
+                    al_rest(3.0);
+                    GAME_MODE = ranking;
+                   
+                    
+
+
+                }
+                if (isGameLost(t) == true)
+                {
+                    //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                    al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "G A M E  O V E R");
+                    printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+
+                    al_draw_textf(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2 + game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+                    al_flip_display();
+                    updateRankingArray(gameScores, localScore);
+                    writeFile(gameScores);
+
+                    al_rest(3.0);
+                    GAME_MODE = ranking;
+                    
+                    
+
+
+
+                }
+
+
+
+            }
+
+
+            localScore.wynik = wynik;
+
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    al_draw_filled_rectangle(j * game_width / 4, i * game_width / 4, (j + 1) * game_width / 4, (i + 1) * game_width / 4, getColor(t[i][j]));
+                }
+            }
+            /* al_draw_line(6, 0, 6, 406, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
+             al_draw_line(106, 0, 106, 406, al_map_rgb(0, 0, 0), 3);
+             al_draw_line(206, 0, 206, 406, al_map_rgb(0, 0, 0), 3);
+             al_draw_line(306, 0, 306, 406, al_map_rgb(0, 0, 0), 3);
+             al_draw_line(406, 0, 406, 406, al_map_rgb(0, 0, 0), 3);
+             */
+            drawGameBoard(display, info, fontWYNIK);
+
+            /*
+            al_draw_line(6, 0, 406, 0, al_map_rgb(0, 0, 0), 3);
+            al_draw_line(6, 106, 406, 106, al_map_rgb(0, 0, 0), 3);
+            al_draw_line(6, 206, 406, 206, al_map_rgb(0, 0, 0), 3);
+            al_draw_line(6, 306, 406, 306, al_map_rgb(0, 0, 0), 3);
+            al_draw_line(6, 406, 406, 406, al_map_rgb(0, 0, 0), 3);
+            */
+
+
+
+
+            al_draw_textf(fontWART_WYNIK, al_map_rgb(0, 0, 0), 140, game_width + game_height / 20, 0, "%d", localScore.wynik); //wyswietla wartość wyniku
+            al_draw_textf(fontWART_WYNIK, al_map_rgb(0, 0, 0), 140, game_width + game_height / 12, 0, "%d min %d sec", localScore.gameTimeMin, localScore.gameTimeSec); //wyswietla aktualny czas gry
+
+
+           // al_draw_filled_rectangle(280, 20, 350, 80, al_map_rgb(0, 0, 0));
+            if (t[0][0] != 0) al_draw_textf(F1, al_map_rgb(0, 0, 0), game_width / 8, game_width / 8, 0, "%d", t[0][0]); //wyswietla wartosci tablicy 
+            if (t[0][1] != 0)al_draw_textf(F2, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width / 8, 0, "%d", t[0][1]);
+            if (t[0][2] != 0) al_draw_textf(F3, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width / 8, 0, "%d", t[0][2]);
+            if (t[0][3] != 0)al_draw_textf(F4, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width / 8, 0, "%d", t[0][3]);
+
+            if (t[1][0] != 0)al_draw_textf(F5, al_map_rgb(0, 0, 0), game_width / 8, game_width * 3 / 8, 0, "%d", t[1][0]);
+            if (t[1][1] != 0)al_draw_textf(F6, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 3 / 8, 0, "%d", t[1][1]);
+            if (t[1][2] != 0)al_draw_textf(F7, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 3 / 8, 0, "%d", t[1][2]);
+            if (t[1][3] != 0)al_draw_textf(F8, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 3 / 8, 0, "%d", t[1][3]);
+
+            if (t[2][0] != 0)al_draw_textf(F9, al_map_rgb(0, 0, 0), game_width / 8, game_width * 5 / 8, 0, "%d", t[2][0]);
+            if (t[2][1] != 0)al_draw_textf(F10, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 5 / 8, 0, "%d", t[2][1]);
+            if (t[2][2] != 0)al_draw_textf(F11, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 5 / 8, 0, "%d", t[2][2]);
+            if (t[2][3] != 0) al_draw_textf(F12, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 5 / 8, 0, "%d", t[2][3]);
+
+            if (t[3][0] != 0)al_draw_textf(F13, al_map_rgb(0, 0, 0), game_width / 8, game_width * 7 / 8, 0, "%d", t[3][0]);
+            if (t[3][1] != 0)al_draw_textf(F14, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 7 / 8, 0, "%d", t[3][1]);
+            if (t[3][2] != 0)al_draw_textf(F15, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 7 / 8, 0, "%d", t[3][2]);
+            if (t[3][3] != 0) al_draw_textf(F16, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 7 / 8, 0, "%d", t[3][3]);
+
+            al_flip_display();
+            al_clear_to_color(al_map_rgb(213, 196, 161));
+            //print(t);
+
+
+
+
+
+
+
+
         }
 
-
+        else if (GAME_MODE == ranking)
+        {
         
-        enum move key=none;
 
         if (events.type == ALLEGRO_EVENT_KEY_DOWN)
         {
 
             switch (events.keyboard.keycode)
             {
-            case ALLEGRO_KEY_DOWN:
-                key = down;
-               // move(t,down2);
-
-                break;
-            case ALLEGRO_KEY_UP:
-                key = up;
-               // move(t, up2);
-
-                break;
-            case ALLEGRO_KEY_RIGHT:
-                key = right;
-                //move(t, right2);
-
-                break;
-            case ALLEGRO_KEY_LEFT:
-                key = left;
-                //move(t, left2);
-
-                break;
             case ALLEGRO_KEY_ESCAPE:
-                //saveScoreBoard(wynik, minutesPassed, secondsPassed);
-
                 done = true;
-                printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
-                
-
-
-                al_clear_to_color(getColor(0));
-                al_draw_text(score_board_font,al_map_rgb_f(0, 0,0), game_width / 2, game_height / 2,ALLEGRO_ALIGN_CENTER,"G A M E  O V E R");
-                printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
-
-                al_draw_textf(score_board_font,al_map_rgb_f(0, 0,0), game_width / 2, game_height / 2+game_height/20,ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
-                al_flip_display();
-                updateRankingArray(gameScores, localScore);
+                break;
+            case ALLEGRO_KEY_R:
+                resetRanking(gameScores);
                 writeFile(gameScores);
-
-                al_rest(3.0);
-                al_clear_to_color(getColor(0));
-                al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, 0, ALLEGRO_ALIGN_CENTER, "LEADERBOARD");
-
-                for (int i=0; i<10;i++)
-                    al_draw_textf(score_board_font, al_map_rgb(0, 0, 0),game_width/2, (i+1) * game_height / 10-game_height/20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
-                al_flip_display();
-               
-                al_rest(15.0);
-                
-
                 break;
-               
+
             default:
-                
                 break;
-            }
 
+
+            }
         }
         else if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-        {
             done = true;
 
-            break;
-        }
-       
-        if (key == left)
-            move(t, left2);      
-        else if (key == right)       
-            move(t, right2);
+         readeFile(gameScores);
+        al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, 0, ALLEGRO_ALIGN_CENTER, "LEADERBOARD");
+
+        for (int i = 0; i < 10; i++)
+            al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, (i + 1) * game_height / 10 - game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
         
-        else if (key == down)
-            move(t, down2);
-        else if (key == up)
-            move(t, up2);
-
-
-        localScore.wynik = wynik;
-
-
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                al_draw_filled_rectangle(j * game_width/4 , i * game_width / 4, (j + 1) * game_width / 4, (i + 1) * game_width / 4, getColor(t[i][j]));
-            }
-        }
-       /* al_draw_line(6, 0, 6, 406, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
-        al_draw_line(106, 0, 106, 406, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(206, 0, 206, 406, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(306, 0, 306, 406, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(406, 0, 406, 406, al_map_rgb(0, 0, 0), 3);
-        */
-        al_draw_line(3, 0, 3, game_width, al_map_rgb(0, 0, 0), 4); //rysujemy ramke
-        al_draw_line(game_width / 4, 0, game_width / 4, game_width, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(game_width / 2, 0, game_width / 2, game_width, al_map_rgb(0, 0, 0), 3);
-        al_draw_line((game_width * 3 / 4), 0, game_width * 3 / 4, game_width, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(game_width-3, 0, game_width-3, game_width, al_map_rgb(0, 0, 0),4);
-
-
-
-
-        al_draw_line(3, 0, game_width-3, 0, al_map_rgb(0, 0, 0), 6); //rysujemy ramke
-        al_draw_line(3, game_width/4, game_width-3, game_width / 4, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
-        al_draw_line(3, game_width*3/4,game_width - 3, game_width * 3 / 4, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
-        al_draw_line(3, game_width/2, game_width - 3, game_width / 2, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
-        al_draw_line(3, game_width, game_width - 3, game_width , al_map_rgb(0, 0, 0), 3); //rysujemy ramke
-       
-
-        /*
-        al_draw_line(6, 0, 406, 0, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(6, 106, 406, 106, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(6, 206, 406, 206, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(6, 306, 406, 306, al_map_rgb(0, 0, 0), 3);
-        al_draw_line(6, 406, 406, 406, al_map_rgb(0, 0, 0), 3);
-        */
-
-        al_draw_text(fontWYNIK, al_map_rgb(0, 0, 0), 2, game_width+game_height/20, 0, "WYNIK:"); //wyswietla napis 'WYNIK'
-                //printf("Actual Time: %d min: %d sec",minutesPassed, secondsPassed);
-        al_draw_text(fontWYNIK, al_map_rgb(0, 0, 0), 2, game_width + game_height / 12, 0, "TIMER:"); //wyswietla napis 'TIMER'
-
-
-        al_draw_textf(fontWART_WYNIK, al_map_rgb(0, 0, 0), 140, game_width + game_height / 20, 0, "%.0f", wynik); //wyswietla wartość wyniku
-        al_draw_textf(fontWART_WYNIK, al_map_rgb(0, 0, 0), 140, game_width + game_height / 12, 0, "%d min %d sec", minutesPassed, secondsPassed); //wyswietla aktualny czas gry
-
-
-       // al_draw_filled_rectangle(280, 20, 350, 80, al_map_rgb(0, 0, 0));
-        if (t[0][0] != 0) al_draw_textf(F1, al_map_rgb(0, 0, 0), game_width / 8, game_width / 8, 0, "%d", t[0][0]); //wyswietla wartosci tablicy 
-        if (t[0][1] != 0)al_draw_textf(F2, al_map_rgb(0, 0, 0), game_width *3 / 8, game_width / 8, 0, "%d", t[0][1]);
-        if (t[0][2] != 0) al_draw_textf(F3, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width / 8, 0, "%d", t[0][2]);
-        if (t[0][3] != 0)al_draw_textf(F4, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width / 8, 0, "%d", t[0][3]);
-
-        if (t[1][0] != 0)al_draw_textf(F5, al_map_rgb(0, 0, 0), game_width/8, game_width * 3 / 8, 0, "%d", t[1][0]);
-        if (t[1][1] != 0)al_draw_textf(F6, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 3 / 8, 0, "%d", t[1][1]);
-        if (t[1][2] != 0)al_draw_textf(F7, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 3 / 8, 0, "%d", t[1][2]);
-        if (t[1][3] != 0)al_draw_textf(F8, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 3 / 8, 0, "%d", t[1][3]);
-
-        if (t[2][0] != 0)al_draw_textf(F9, al_map_rgb(0, 0, 0), game_width / 8, game_width * 5 / 8, 0, "%d", t[2][0]);
-        if (t[2][1] != 0)al_draw_textf(F10, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 5 / 8, 0, "%d", t[2][1]);
-        if (t[2][2] != 0)al_draw_textf(F11, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 5 / 8, 0, "%d", t[2][2]);
-        if (t[2][3] != 0) al_draw_textf(F12, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 5 / 8, 0, "%d", t[2][3]);
-
-        if (t[3][0] != 0)al_draw_textf(F13, al_map_rgb(0, 0, 0), game_width / 8, game_width * 7 / 8, 0, "%d", t[3][0]);
-        if (t[3][1] != 0)al_draw_textf(F14, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 7 / 8, 0, "%d", t[3][1]);
-        if (t[3][2] != 0)al_draw_textf(F15, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 7 / 8, 0, "%d", t[3][2]);
-        if (t[3][3] != 0) al_draw_textf(F16, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 7 / 8, 0, "%d", t[3][3]);
-
+        
         al_flip_display();
+
+
         al_clear_to_color(al_map_rgb(213, 196, 161));
-        //print(t);
+        
+        
+
+        
+
+
+
+        }
+
+
+       
     }
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
