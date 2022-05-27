@@ -37,6 +37,15 @@ typedef struct gameScore
     int gameTimeSec;
 };
 
+
+struct button
+{
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+};
+
 void fill(int t[4][4]) //tworzenie tablicy
 {
     for (int i = 0; i < 4; i++)
@@ -387,6 +396,23 @@ void move(int t[4][4], bool** operation(int*, int*))
 
 }
 
+void resetBoard(int t[4][4], struct gameScore *score)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            t[i][j] = 0;
+        }
+    }
+    score->gameTimeMin = 0;
+    score->gameTimeSec = 0;
+    score->wynik = 0;
+    wynik = 0;
+    random_1(t);
+    random_1(t);
+}
+
 bool wygrana(int t[4][4])
 {
     for (int i = 0; i < 4; i++)
@@ -683,6 +709,17 @@ void resetRanking(struct gameScore gameScoreArray[10])
 }
 
 
+int BothPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y)
+{
+    printf("\nRECTANGLE: X1: %d X2: %d, Y1: %d Y2 %d\n", rect_x1, rect_x2, rect_y1, rect_y2);
+    if (p1x >= rect_x1 && p1x <= rect_x2 && p1y >= rect_y1 && p1y <= rect_y2)
+        return 1;
+    else
+        return 0;
+}
+
+
+
 
 
 
@@ -720,13 +757,21 @@ ALLEGRO_COLOR getColor(int value)
 
 
 
-void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_FONT* font)
+void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_FONT* font, int t[4][4], struct gameScore localScore)
 {
     al_get_monitor_info(0, &info);
     int res_x_comp = info.x2 - info.x1;
     int res_y_comp = info.y2 - info.y1;
     float game_height = (float)(res_y_comp / 2);
     float game_width = (float)(res_x_comp / 4);
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            al_draw_filled_rectangle(j * game_width / 4, i * game_width / 4, (j + 1) * game_width / 4, (i + 1) * game_width / 4, getColor(t[i][j]));
+        }
+    }
     al_draw_line(3, 0, 3, game_width, al_map_rgb(0, 0, 0), 4); //rysujemy ramke
     al_draw_line(game_width / 4, 0, game_width / 4, game_width, al_map_rgb(0, 0, 0), 3);
     al_draw_line(game_width / 2, 0, game_width / 2, game_width, al_map_rgb(0, 0, 0), 3);
@@ -742,13 +787,52 @@ void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_
     al_draw_line(3, game_width / 2, game_width - 3, game_width / 2, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
     al_draw_line(3, game_width, game_width - 3, game_width, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
 
-
+    
 
     al_draw_text(font, al_map_rgb(0, 0, 0), 2, game_width + game_height / 20, 0, "WYNIK:"); //wyswietla napis 'WYNIK'
                 //printf("Actual Time: %d min: %d sec",minutesPassed, secondsPassed);
     al_draw_text(font, al_map_rgb(0, 0, 0), 2, game_width + game_height / 12, 0, "TIMER:"); //wyswietla napis 'TIMER'
 
+
+
+
+    al_draw_textf(font, al_map_rgb(0, 0, 0), 140, game_width + game_height / 20, 0, "%d", localScore.wynik); //wyswietla wartość wyniku
+    al_draw_textf(font, al_map_rgb(0, 0, 0), 140, game_width + game_height / 12, 0, "%d min %d sec", localScore.gameTimeMin, localScore.gameTimeSec); //wyswietla aktualny czas gry
+
+
+   // al_draw_filled_rectangle(280, 20, 350, 80, al_map_rgb(0, 0, 0));
+    if (t[0][0] != 0) al_draw_textf(font, al_map_rgb(0, 0, 0), game_width / 8, game_width / 8, 0, "%d", t[0][0]); //wyswietla wartosci tablicy 
+    if (t[0][1] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width / 8, 0, "%d", t[0][1]);
+    if (t[0][2] != 0) al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width / 8, 0, "%d", t[0][2]);
+    if (t[0][3] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width / 8, 0, "%d", t[0][3]);
+
+    if (t[1][0] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width / 8, game_width * 3 / 8, 0, "%d", t[1][0]);
+    if (t[1][1] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 3 / 8, 0, "%d", t[1][1]);
+    if (t[1][2] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 3 / 8, 0, "%d", t[1][2]);
+    if (t[1][3] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 3 / 8, 0, "%d", t[1][3]);
+
+    if (t[2][0] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width / 8, game_width * 5 / 8, 0, "%d", t[2][0]);
+    if (t[2][1] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 5 / 8, 0, "%d", t[2][1]);
+    if (t[2][2] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 5 / 8, 0, "%d", t[2][2]);
+    if (t[2][3] != 0) al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 5 / 8, 0, "%d", t[2][3]);
+
+    if (t[3][0] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width / 8, game_width * 7 / 8, 0, "%d", t[3][0]);
+    if (t[3][1] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 7 / 8, 0, "%d", t[3][1]);
+    if (t[3][2] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 7 / 8, 0, "%d", t[3][2]);
+    if (t[3][3] != 0) al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 7 / 8, 0, "%d", t[3][3]);
+
+    al_draw_filled_rectangle(game_width * 3 / 4, game_width + game_height / 40, game_width * 3 / 4 + game_width * 1 / 5, game_height - game_height / 40, getColor(2));
+    al_draw_text(font, al_map_rgb(0, 0, 0), (game_width * 3 / 4 + game_width * 3 / 4 + game_width * 1 / 5) / 2, (game_width + game_height / 80 + game_height - game_height / 40) / 2, ALLEGRO_ALIGN_CENTER, "RESET");
+
 }
+
+
+
+
+
+
+
+
 
 int main()
 {
@@ -756,10 +840,11 @@ int main()
 
     fill(t);
     random_2(t);
+    bool first_redraw_ranking = true;
     // print(t);
 
 
-    bool redraw = false;
+    bool redraw = true;
 
 
 
@@ -846,19 +931,21 @@ int main()
     }
 
     al_install_keyboard();
+    al_install_mouse();
 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     //ALLEGRO_EVENT_QUEUE* event_display_queue = al_create_event_queue();
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
+    al_register_event_source(event_queue, al_get_mouse_event_source());
     // timePassed = (int)al_get_timer_count(timer);
     int actualTime = al_current_time(timer);
-
+    int pos_x = 0, pos_y = 0;
 
     enum game_status GAME_MODE = play;
 
-
+    
 
     while (!done)
     {
@@ -870,14 +957,22 @@ int main()
         // ALLEGRO_EVENT events2;
         al_wait_for_event(event_queue, &events);
        
-
+        //redraw = true;
 
         if (GAME_MODE == play)
 
 
         {
+            struct button resetGameboard;
+            resetGameboard.x1 = (int)(game_width * 3 / 4);
+            resetGameboard.y1 = (int)(game_width + game_height / 40);
+            resetGameboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
+            resetGameboard.y2 = (int)(game_height - game_height / 40);
+
             
 
+            
+           
             bool changeTime = false;
             if (actualTime != (int)al_current_time(timer)) {
                 actualTime = (int)al_current_time(timer);
@@ -886,7 +981,8 @@ int main()
 
             if (changeTime == true) {
                 timePassed += 1;
-                printf("%d", timePassed % 60);
+                redraw = true;
+                //printf("%d", timePassed % 60);
                 if ((int)timePassed % 60 == 0)
                 {
 
@@ -903,6 +999,60 @@ int main()
                     localScore.gameTimeSec += 1;
                 }
             }
+            if (events.type == ALLEGRO_EVENT_MOUSE_AXES)
+            {
+                pos_x = events.mouse.x;
+                pos_y = events.mouse.y;
+
+                //printf("POSITION: x:%d  y:%d  \n", pos_x, pos_y);
+                // if (events2.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+                     //puts("1");
+                  //al_draw_filled_rectangle(game_width * 3 / 4, game_width + game_height / 40, game_width * 3 / 4 + game_width * 1 / 5, game_height - game_height / 40, getColor(2));
+                  //al_draw_text(fontWYNIK, al_map_rgb(0, 0, 0), (game_width * 3 / 4 + game_width * 3 / 4 + game_width * 1 / 5) / 2, (game_width + game_height / 80 + game_height - game_height / 40) / 2, ALLEGRO_ALIGN_CENTER, "RBBBBB");
+                  //al_flip_display();
+               // al_flush_event_queue(event_queue); //against buffer overload
+
+            }
+            else if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+            {
+                redraw = true;
+                //change = true;
+                printf("\nCLICK X:%d Y:%d ", pos_x, pos_y);
+                if (events.mouse.button & 1)
+                {
+                   // puts("1");
+                    if (BothPointsInRect(resetGameboard.x1, resetGameboard.y1, resetGameboard.x2, resetGameboard.y2, pos_x, pos_y) == 1)
+                    {
+                        
+                        puts("\ndamn it works\n");
+                        resetBoard(t, &localScore);
+                    }
+                        
+                }
+                     puts("1");
+                /*
+                 if (events2.mouse.button & 1)
+                 {
+                     puts("2");
+
+                     int pos_x_first = events2.mouse.x;
+                     int pos_y_first =events2.mouse.y;
+                     //printf("First x:%f First y:%f  ", pos_x_first, pos_y_first);
+
+
+                     printf("First x:%d First y:%d  ", pos_x_first, pos_y_first);
+                     if (BothPointsInRect(game_width * 3 / 4, game_width + game_height / 40, game_width * 3 / 4 + game_width * 1 / 5, game_height - game_height / 40, pos_x_first, pos_y_first)==1);
+                         puts("damn it works");
+
+
+
+
+
+
+                 //}
+                 */
+
+             }
 
             if (events.type == ALLEGRO_EVENT_KEY_DOWN)
             {
@@ -911,25 +1061,32 @@ int main()
                 {
                 case ALLEGRO_KEY_DOWN:
                     key = down;
+                    redraw = true;
+
                     // move(t,down2);
 
                     break;
                 case ALLEGRO_KEY_UP:
                     key = up;
+                    redraw = true;
+
                     // move(t, up2);
 
                     break;
                 case ALLEGRO_KEY_RIGHT:
                     key = right;
+                    redraw = true;
+
                     //move(t, right2);
 
                     break;
                 case ALLEGRO_KEY_LEFT:
                     key = left;
                     //move(t, left2);
-
+                    redraw = true;
                     break;
                 case ALLEGRO_KEY_ESCAPE:
+                    
                     //saveScoreBoard(wynik, minutesPassed, secondsPassed);
 
                    
@@ -947,7 +1104,11 @@ int main()
                     writeFile(gameScores);
 
                     al_rest(3.0);
+                    al_clear_to_color(getColor(0));
+
                     GAME_MODE = ranking;
+                    //redraw = true;
+
 
 
                     
@@ -965,79 +1126,85 @@ int main()
 
                 break;
             }
+            if (redraw == true)
 
-            if (key == left)
-                move(t, left2);
-            else if (key == right)
-                move(t, right2);
-
-            else if (key == down)
-                move(t, down2);
-            else if (key == up)
-                move(t, up2);
-
-            if (key == up || key == down || key == right || key == left)
             {
-                if (wygrana(t) == true)
+                redraw = false;
+
+                if (key == left)
+                    move(t, left2);
+                else if (key == right)
+                    move(t, right2);
+
+                else if (key == down)
+                    move(t, down2);
+                else if (key == up)
+                    move(t, up2);
+
+                if (key == up || key == down || key == right || key == left)
                 {
-                    //saveScoreBoard(wynik, minutesPassed, secondsPassed);
-                    al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "Y O U  W O N");
-                    printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+                    if (wygrana(t) == true)
+                    {
+                        //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                        al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "Y O U  W O N");
+                        printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
 
-                    al_draw_textf(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2 + game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
-                    al_flip_display();
-                    updateRankingArray(gameScores, localScore);
-                    writeFile(gameScores);
+                        al_draw_textf(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2 + game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+                        al_flip_display();
+                        updateRankingArray(gameScores, localScore);
+                        writeFile(gameScores);
 
-                    al_rest(3.0);
-                    GAME_MODE = ranking;
-                   
-                    
+                        al_rest(3.0);
+                        GAME_MODE = ranking;
+
+
+
+
+                    }
+                    if (isGameLost(t) == true)
+                    {
+                        //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                        al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "G A M E  O V E R");
+                        printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+
+                        al_draw_textf(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2 + game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
+                        al_flip_display();
+                        updateRankingArray(gameScores, localScore);
+                        writeFile(gameScores);
+
+                        al_rest(3.0);
+                        redraw = true;
+                        GAME_MODE = ranking;
+
+
+
+
+
+                    }
+
 
 
                 }
-                if (isGameLost(t) == true)
-                {
-                    //saveScoreBoard(wynik, minutesPassed, secondsPassed);
-                    al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "G A M E  O V E R");
-                    printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
-
-                    al_draw_textf(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2 + game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
-                    al_flip_display();
-                    updateRankingArray(gameScores, localScore);
-                    writeFile(gameScores);
-
-                    al_rest(3.0);
-                    GAME_MODE = ranking;
-                    
-                    
 
 
-
-                }
-
+                localScore.wynik = wynik;
+                drawGameBoard(display, info, fontWYNIK, t, localScore);
+                al_flip_display();
+                al_clear_to_color(al_map_rgb(213, 196, 161));
 
 
             }
+            
 
 
-            localScore.wynik = wynik;
-
-
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    al_draw_filled_rectangle(j * game_width / 4, i * game_width / 4, (j + 1) * game_width / 4, (i + 1) * game_width / 4, getColor(t[i][j]));
-                }
-            }
+            
             /* al_draw_line(6, 0, 6, 406, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
              al_draw_line(106, 0, 106, 406, al_map_rgb(0, 0, 0), 3);
              al_draw_line(206, 0, 206, 406, al_map_rgb(0, 0, 0), 3);
              al_draw_line(306, 0, 306, 406, al_map_rgb(0, 0, 0), 3);
              al_draw_line(406, 0, 406, 406, al_map_rgb(0, 0, 0), 3);
              */
-            drawGameBoard(display, info, fontWYNIK);
+           
 
             /*
             al_draw_line(6, 0, 406, 0, al_map_rgb(0, 0, 0), 3);
@@ -1050,33 +1217,8 @@ int main()
 
 
 
-            al_draw_textf(fontWART_WYNIK, al_map_rgb(0, 0, 0), 140, game_width + game_height / 20, 0, "%d", localScore.wynik); //wyswietla wartość wyniku
-            al_draw_textf(fontWART_WYNIK, al_map_rgb(0, 0, 0), 140, game_width + game_height / 12, 0, "%d min %d sec", localScore.gameTimeMin, localScore.gameTimeSec); //wyswietla aktualny czas gry
 
-
-           // al_draw_filled_rectangle(280, 20, 350, 80, al_map_rgb(0, 0, 0));
-            if (t[0][0] != 0) al_draw_textf(F1, al_map_rgb(0, 0, 0), game_width / 8, game_width / 8, 0, "%d", t[0][0]); //wyswietla wartosci tablicy 
-            if (t[0][1] != 0)al_draw_textf(F2, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width / 8, 0, "%d", t[0][1]);
-            if (t[0][2] != 0) al_draw_textf(F3, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width / 8, 0, "%d", t[0][2]);
-            if (t[0][3] != 0)al_draw_textf(F4, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width / 8, 0, "%d", t[0][3]);
-
-            if (t[1][0] != 0)al_draw_textf(F5, al_map_rgb(0, 0, 0), game_width / 8, game_width * 3 / 8, 0, "%d", t[1][0]);
-            if (t[1][1] != 0)al_draw_textf(F6, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 3 / 8, 0, "%d", t[1][1]);
-            if (t[1][2] != 0)al_draw_textf(F7, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 3 / 8, 0, "%d", t[1][2]);
-            if (t[1][3] != 0)al_draw_textf(F8, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 3 / 8, 0, "%d", t[1][3]);
-
-            if (t[2][0] != 0)al_draw_textf(F9, al_map_rgb(0, 0, 0), game_width / 8, game_width * 5 / 8, 0, "%d", t[2][0]);
-            if (t[2][1] != 0)al_draw_textf(F10, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 5 / 8, 0, "%d", t[2][1]);
-            if (t[2][2] != 0)al_draw_textf(F11, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 5 / 8, 0, "%d", t[2][2]);
-            if (t[2][3] != 0) al_draw_textf(F12, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 5 / 8, 0, "%d", t[2][3]);
-
-            if (t[3][0] != 0)al_draw_textf(F13, al_map_rgb(0, 0, 0), game_width / 8, game_width * 7 / 8, 0, "%d", t[3][0]);
-            if (t[3][1] != 0)al_draw_textf(F14, al_map_rgb(0, 0, 0), game_width * 3 / 8, game_width * 7 / 8, 0, "%d", t[3][1]);
-            if (t[3][2] != 0)al_draw_textf(F15, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 7 / 8, 0, "%d", t[3][2]);
-            if (t[3][3] != 0) al_draw_textf(F16, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 7 / 8, 0, "%d", t[3][3]);
-
-            al_flip_display();
-            al_clear_to_color(al_map_rgb(213, 196, 161));
+           
             //print(t);
 
 
@@ -1090,41 +1232,93 @@ int main()
 
         else if (GAME_MODE == ranking)
         {
+
+            struct button resetScoreboard;
+
+            resetScoreboard.x1 = (int)(game_width * 3 / 4);
+            resetScoreboard.y1 = (int)(game_width + game_height / 40);
+            resetScoreboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
+            resetScoreboard.y2 = (int)(game_height - game_height / 40 + 15);
+
+              
         
-
-        if (events.type == ALLEGRO_EVENT_KEY_DOWN)
-        {
-
-            switch (events.keyboard.keycode)
+            if (events.type == ALLEGRO_EVENT_MOUSE_AXES)
             {
-            case ALLEGRO_KEY_ESCAPE:
-                done = true;
-                break;
-            case ALLEGRO_KEY_R:
-                resetRanking(gameScores);
-                writeFile(gameScores);
-                break;
+                pos_x = events.mouse.x;
+                pos_y = events.mouse.y;
 
-            default:
-                break;
+                printf("POSITION: x:%d  y:%d  \n", pos_x, pos_y);
+                // if (events2.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+                     //puts("1");
+                  //al_draw_filled_rectangle(game_width * 3 / 4, game_width + game_height / 40, game_width * 3 / 4 + game_width * 1 / 5, game_height - game_height / 40, getColor(2));
+                  //al_draw_text(fontWYNIK, al_map_rgb(0, 0, 0), (game_width * 3 / 4 + game_width * 3 / 4 + game_width * 1 / 5) / 2, (game_width + game_height / 80 + game_height - game_height / 40) / 2, ALLEGRO_ALIGN_CENTER, "RBBBBB");
+                  //al_flip_display();
+               // al_flush_event_queue(event_queue); //against buffer overload
+
+            }
+            
+            else if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
+            {
+                redraw = true;
+                //change = true;
+
+                printf("\nCLICK X:%d Y:%d ", pos_x, pos_y);
+                if (events.mouse.button & 1)
+                {
+                    // puts("1");
+                    if (BothPointsInRect(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, pos_x, pos_y) == 1)
+                    {
+                        resetRanking(gameScores);
+                        writeFile(gameScores);
+                        
+                        puts("\ndamn it works\n");
+                    }
+
+                }
+            }
+            if (events.type == ALLEGRO_EVENT_KEY_DOWN)
+            {
+
+                switch (events.keyboard.keycode)
+                {
+                case ALLEGRO_KEY_ESCAPE:
+                    done = true;
+                    break;
+                case ALLEGRO_KEY_R:
+                    resetRanking(gameScores);
+                    writeFile(gameScores);
+                    break;
+
+                default:
+                    break;
+
+
+                }
+            }
+            else if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+                done = true;
+            if (redraw == true||first_redraw_ranking==true)
+            {
+                redraw = false;
+                first_redraw_ranking = false;
+
+                readeFile(gameScores);
+                al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, 0, ALLEGRO_ALIGN_CENTER, "LEADERBOARD");
+
+                for (int i = 0; i < 10; i++)
+                    al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, (i + 1) * game_height / 10 - game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
+                al_draw_filled_rectangle(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, getColor(2));
+                al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboard.x1 + resetScoreboard.x2) / 2, (resetScoreboard.y1 + resetScoreboard.y2) / 2-5, ALLEGRO_ALIGN_CENTER, "RESET");
+                al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboard.x1 + resetScoreboard.x2) / 2, (resetScoreboard.y1 + resetScoreboard.y2) / 2+5, ALLEGRO_ALIGN_CENTER, "SCOREBOARD");
+
+                al_flip_display();
+
+
+                al_clear_to_color(al_map_rgb(213, 196, 161));
 
 
             }
-        }
-        else if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-            done = true;
-
-         readeFile(gameScores);
-        al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, 0, ALLEGRO_ALIGN_CENTER, "LEADERBOARD");
-
-        for (int i = 0; i < 10; i++)
-            al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, (i + 1) * game_height / 10 - game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
-        
-        
-        al_flip_display();
-
-
-        al_clear_to_color(al_map_rgb(213, 196, 161));
+             
         
         
 
@@ -1134,7 +1328,7 @@ int main()
 
         }
 
-
+        //al_flush_event_queue(event_queue);
        
     }
     al_destroy_display(display);
