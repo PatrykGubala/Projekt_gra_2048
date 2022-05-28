@@ -30,7 +30,7 @@ struct color
 };
 
 
-typedef struct gameScore
+typedef struct gameScore //Struktura wyniku gry
 {
     int wynik;
     int gameTimeMin;
@@ -38,13 +38,24 @@ typedef struct gameScore
 };
 
 
-struct button
+struct button //struktura przycisku
 {
     int x1;
     int y1;
     int x2;
     int y2;
+    ALLEGRO_COLOR color;
 };
+
+
+
+void must_init(bool test, const char* description)
+{
+    if (test) return;
+
+    printf("couldn't initialize %s\n", description);
+    exit(1);
+}
 
 void fill(int t[4][4]) //tworzenie tablicy
 {
@@ -459,117 +470,7 @@ bool isGameLost(int t[4][4])
     return false;
 
 }
-/*
 
-void saveScoreBoard(int score, int gameTimeMin, int gameTimeSec)
-{
-    FILE* fp;
-    errno_t err;
-    int localScore = 0, localGameTimeSec = 0, localGameTimeMin = 0;
-    err = fopen_s(&fp, "Ranking.txt", "w+");
-
-
-
-    if (err!=0)
-    {
-        printf("The file 'Ranking.txt' was not opened");
-
-    }
-
-    else
-    {
-        printf("The file 'Ranking.txt' was opened");
-
-        if (fp)
-            fseek(fp, 0L, SEEK_SET);
-        printf("SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
-
-        fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", 1, 11, 12);
-        fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", 10, 11, 12);
-        fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", 10, 11, 12);
-
-
-        fseek(fp, 0L, SEEK_SET);
-        /*while (!feof(fp))
-        {
-
-           //fscanf_s(fp, "SCORE: %d\t TIMER: %d min %d sec\n", &localScore, &localGameTimeMin, &localGameTimeSec);
-           fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
-
-
-           printf("SCORE: %d\t TIMER: %d min %d sec\n", localScore, localGameTimeMin, localGameTimeSec);
-           //printf("Pointer %d\n", fp);
-            if (score > localScore)
-            {
-                //fseek(fp, 0L, SEEK_CUR);
-                //fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
-
-                //fscanf_s(fp, "SCORE: %d\t TIMER: %d min %d sec\n", &localScore, &localGameTimeMin, &localGameTimeSec);
-
-
-                //printf("SCORE: %d\t TIMER: %d min %d sec\n", localScore, localGameTimeMin, localGameTimeSec);
-
-            }
-
-        }
-
-        score = 15;
-        gameTimeSec = 20;
-        gameTimeMin = 15;
-        for (int i = 0; i < 10; i++)
-        {
-            if (feof(fp)==0)
-            {
-                printf(" \nif 1 i: %d \n", i);
-                fscanf_s(fp, "SCORE: %d\t TIMER: %d min %d sec\n", &localScore, &localGameTimeMin, &localGameTimeSec);
-                printf("SCORE: %d\t TIMER: %d min %d sec\n", localScore, localGameTimeMin, localGameTimeSec);
-                printf("GAME SCORE: %d\t GAME TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
-
-                if (score > localScore)
-                {
-                    printf(" \nif 2 i: %d \n", i);
-
-                    fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
-                    score = localScore;
-                    gameTimeMin = localGameTimeMin;
-                    gameTimeSec = localGameTimeSec;
-                }
-                else
-                {
-                    printf(" \nel 2 i: %d \n", i);
-
-                    fseek(fp, 0, SEEK_END);
-                    fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", 0, 0, 0);
-                }
-                    //fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", localScore, localGameTimeMin, localGameTimeSec);
-
-
-
-
-            }
-            else
-            {
-                printf(" \nel 1 i: %d \n", i);
-
-                fseek(fp, 0, SEEK_END);
-                fprintf(fp, "SCORE: 0\t TIMER: 0 min 0 sec\n");
-            }
-            //fprintf(fp, "SCORE: %d\t TIMER: %d min %d sec\n", score, gameTimeMin, gameTimeSec);
-        }
-
-    }
-    if (fp)
-      fclose(fp);
-
-
-
-
-
-
-}
-
-
-*/
 
 void writeFile(struct gameScore gameScoreArray[10])
 {
@@ -709,10 +610,18 @@ void resetRanking(struct gameScore gameScoreArray[10])
 }
 
 
-int BothPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y)
+int BothPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y,int p2x, int p2y )
 {
     printf("\nRECTANGLE: X1: %d X2: %d, Y1: %d Y2 %d\n", rect_x1, rect_x2, rect_y1, rect_y2);
-    if (p1x >= rect_x1 && p1x <= rect_x2 && p1y >= rect_y1 && p1y <= rect_y2)
+    if (p1x >= rect_x1 && p1x <= rect_x2 && p1y >= rect_y1 && p1y <= rect_y2&& p2x >= rect_x1 && p2x <= rect_x2 && p2y >= rect_y1 && p2y <= rect_y2)
+        return 1;
+    else
+        return 0;
+}
+int StartingPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y)
+{
+    printf("\nRECTANGLE: X1: %d X2: %d, Y1: %d Y2 %d\n", rect_x1, rect_x2, rect_y1, rect_y2);
+    if (p1x >= rect_x1 && p1x <= rect_x2 && p1y >= rect_y1 && p1y <= rect_y2 )
         return 1;
     else
         return 0;
@@ -757,7 +666,7 @@ ALLEGRO_COLOR getColor(int value)
 
 
 
-void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_FONT* font, int t[4][4], struct gameScore localScore)
+void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_FONT* font, int t[4][4], struct gameScore localScore, struct button resetButton)
 {
     al_get_monitor_info(0, &info);
     int res_x_comp = info.x2 - info.x1;
@@ -821,7 +730,7 @@ void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_
     if (t[3][2] != 0)al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 5 / 8, game_width * 7 / 8, 0, "%d", t[3][2]);
     if (t[3][3] != 0) al_draw_textf(font, al_map_rgb(0, 0, 0), game_width * 7 / 8, game_width * 7 / 8, 0, "%d", t[3][3]);
 
-    al_draw_filled_rectangle(game_width * 3 / 4, game_width + game_height / 40, game_width * 3 / 4 + game_width * 1 / 5, game_height - game_height / 40, getColor(2));
+    al_draw_filled_rectangle(game_width * 3 / 4, game_width + game_height / 40, game_width * 3 / 4 + game_width * 1 / 5, game_height - game_height / 40, resetButton.color);
     al_draw_text(font, al_map_rgb(0, 0, 0), (game_width * 3 / 4 + game_width * 3 / 4 + game_width * 1 / 5) / 2, (game_width + game_height / 80 + game_height - game_height / 40) / 2, ALLEGRO_ALIGN_CENTER, "RESET");
 
 }
@@ -841,10 +750,14 @@ int main()
     fill(t);
     random_2(t);
     bool first_redraw_ranking = true;
+    bool first_redraw_game = true;
     // print(t);
 
 
     bool redraw = true;
+
+    int first_pos_x = 0;
+    int first_pos_y = 0;
 
 
 
@@ -874,6 +787,8 @@ int main()
 
     printf(" seconds passed : %d", secondsPassed);
     bool done = false;
+
+    bool changeRankingFile = true;
 
     int res_x_comp = 0;
     int res_y_comp = 0;
@@ -930,8 +845,8 @@ int main()
         return -1;
     }
 
-    al_install_keyboard();
-    al_install_mouse();
+    must_init(al_install_keyboard(), "keyboard");
+    must_init(al_install_mouse(), "mouse");
 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     //ALLEGRO_EVENT_QUEUE* event_display_queue = al_create_event_queue();
@@ -944,7 +859,20 @@ int main()
     int pos_x = 0, pos_y = 0;
 
     enum game_status GAME_MODE = play;
+    struct button resetGameboard;
+    resetGameboard.x1 = (int)(game_width * 3 / 4);
+    resetGameboard.y1 = (int)(game_width + game_height / 40);
+    resetGameboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
+    resetGameboard.y2 = (int)(game_height - game_height / 40);
+    resetGameboard.color = getColor(2);
 
+    struct button resetScoreboard;
+
+    resetScoreboard.x1 = (int)(game_width * 3 / 4);
+    resetScoreboard.y1 = (int)(game_width + game_height / 40);
+    resetScoreboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
+    resetScoreboard.y2 = (int)(game_height - game_height / 40 + 15);
+    resetScoreboard.color = getColor(2);
     
 
     while (!done)
@@ -963,11 +891,7 @@ int main()
 
 
         {
-            struct button resetGameboard;
-            resetGameboard.x1 = (int)(game_width * 3 / 4);
-            resetGameboard.y1 = (int)(game_width + game_height / 40);
-            resetGameboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
-            resetGameboard.y2 = (int)(game_height - game_height / 40);
+            
 
             
 
@@ -1017,16 +941,17 @@ int main()
             {
                 redraw = true;
                 //change = true;
-                printf("\nCLICK X:%d Y:%d ", pos_x, pos_y);
+                //printf("\nCLICK DOWN  X:%d Y:%d ", pos_x, pos_y);
                 if (events.mouse.button & 1)
                 {
+                    first_pos_x = pos_x;
+                     first_pos_y = pos_y;
+                     if (StartingPointsInRect(resetGameboard.x1, resetGameboard.y1, resetGameboard.x2, resetGameboard.y2, first_pos_x, first_pos_y) == 1)
+                        resetGameboard.color = getColor(4);
+                    printf("\nCLICK DOWN  X:%d Y:%d ", first_pos_x, first_pos_y);
                    // puts("1");
-                    if (BothPointsInRect(resetGameboard.x1, resetGameboard.y1, resetGameboard.x2, resetGameboard.y2, pos_x, pos_y) == 1)
-                    {
-                        
-                        puts("\ndamn it works\n");
-                        resetBoard(t, &localScore);
-                    }
+                   
+                    
                         
                 }
                      puts("1");
@@ -1053,6 +978,27 @@ int main()
                  */
 
              }
+            else if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
+            {
+                redraw = true;
+                //change = true;
+                //printf("\nCLICK UP X:%d Y:%d ", pos_x, pos_y);
+                if (events.mouse.button & 1)
+                {
+                    resetGameboard.color = getColor(2);
+                    int second_pos_x = pos_x;
+                    int second_pos_y = pos_y;
+                    printf("\nCLICK UP  X:%d Y:%d ", second_pos_x, second_pos_y);
+
+                    if (BothPointsInRect(resetGameboard.x1, resetGameboard.y1, resetGameboard.x2, resetGameboard.y2, first_pos_x, first_pos_y, second_pos_x, second_pos_y) == 1)
+                    {
+
+                        puts("\ndamn it works\n");
+                        resetBoard(t, &localScore);
+                    }
+
+                }
+            }
 
             if (events.type == ALLEGRO_EVENT_KEY_DOWN)
             {
@@ -1102,7 +1048,7 @@ int main()
                     al_flip_display();
                     updateRankingArray(gameScores, localScore);
                     writeFile(gameScores);
-
+                    redraw = false;
                     al_rest(3.0);
                     al_clear_to_color(getColor(0));
 
@@ -1123,13 +1069,15 @@ int main()
             else if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
             {
                 done = true;
+                redraw = false;
 
                 break;
             }
-            if (redraw == true)
+            if (redraw == true || first_redraw_game == true)
 
             {
                 redraw = false;
+                first_redraw_game = false;
 
                 if (key == left)
                     move(t, left2);
@@ -1140,12 +1088,16 @@ int main()
                     move(t, down2);
                 else if (key == up)
                     move(t, up2);
+                localScore.wynik = wynik;
+                drawGameBoard(display, info, fontWYNIK, t, localScore, resetGameboard);
 
                 if (key == up || key == down || key == right || key == left)
                 {
                     if (wygrana(t) == true)
                     {
                         //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                        al_clear_to_color(al_map_rgb(213, 196, 161));
+
                         al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "Y O U  W O N");
                         printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
 
@@ -1164,6 +1116,8 @@ int main()
                     if (isGameLost(t) == true)
                     {
                         //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                        al_clear_to_color(al_map_rgb(213, 196, 161));
+
                         al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "G A M E  O V E R");
                         printf("SCORE %d TIME %d %d ", localScore.wynik, localScore.gameTimeMin, localScore.gameTimeSec);
 
@@ -1173,7 +1127,6 @@ int main()
                         writeFile(gameScores);
 
                         al_rest(3.0);
-                        redraw = true;
                         GAME_MODE = ranking;
 
 
@@ -1187,12 +1140,11 @@ int main()
                 }
 
 
-                localScore.wynik = wynik;
-                drawGameBoard(display, info, fontWYNIK, t, localScore);
+               
                 al_flip_display();
                 al_clear_to_color(al_map_rgb(213, 196, 161));
 
-
+                
             }
             
 
@@ -1233,12 +1185,7 @@ int main()
         else if (GAME_MODE == ranking)
         {
 
-            struct button resetScoreboard;
-
-            resetScoreboard.x1 = (int)(game_width * 3 / 4);
-            resetScoreboard.y1 = (int)(game_width + game_height / 40);
-            resetScoreboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
-            resetScoreboard.y2 = (int)(game_height - game_height / 40 + 15);
+           
 
               
         
@@ -1247,31 +1194,54 @@ int main()
                 pos_x = events.mouse.x;
                 pos_y = events.mouse.y;
 
-                printf("POSITION: x:%d  y:%d  \n", pos_x, pos_y);
-                // if (events2.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
-                     //puts("1");
-                  //al_draw_filled_rectangle(game_width * 3 / 4, game_width + game_height / 40, game_width * 3 / 4 + game_width * 1 / 5, game_height - game_height / 40, getColor(2));
-                  //al_draw_text(fontWYNIK, al_map_rgb(0, 0, 0), (game_width * 3 / 4 + game_width * 3 / 4 + game_width * 1 / 5) / 2, (game_width + game_height / 80 + game_height - game_height / 40) / 2, ALLEGRO_ALIGN_CENTER, "RBBBBB");
-                  //al_flip_display();
-               // al_flush_event_queue(event_queue); //against buffer overload
+               
 
             }
             
+            
+
+
             else if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
             {
                 redraw = true;
-                //change = true;
+                 
 
-                printf("\nCLICK X:%d Y:%d ", pos_x, pos_y);
+               
                 if (events.mouse.button & 1)
                 {
-                    // puts("1");
-                    if (BothPointsInRect(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, pos_x, pos_y) == 1)
+                    first_pos_x = pos_x;
+                    first_pos_y = pos_y;
+                    if (StartingPointsInRect(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, first_pos_x, first_pos_y) == 1)
+                        resetScoreboard.color = getColor(4);
+
+
+
+
+                }
+               
+
+            }
+            else if (events.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
+            {
+                redraw = true;
+                
+                
+                if (events.mouse.button & 1)
+                {
+                    resetScoreboard.color = getColor(2);
+
+                    int second_pos_x = pos_x;
+                    int second_pos_y = pos_y;
+                   
+                    printf("\nCLICK UP  X:%d Y:%d ", second_pos_x, second_pos_y);
+
+                    if (BothPointsInRect(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, first_pos_x, first_pos_y, second_pos_x, second_pos_y) == 1)
                     {
                         resetRanking(gameScores);
                         writeFile(gameScores);
-                        
-                        puts("\ndamn it works\n");
+                        changeRankingFile = true;
+
+                       
                     }
 
                 }
@@ -1287,6 +1257,8 @@ int main()
                 case ALLEGRO_KEY_R:
                     resetRanking(gameScores);
                     writeFile(gameScores);
+                    changeRankingFile = true;
+                    redraw = true;
                     break;
 
                 default:
@@ -1297,17 +1269,24 @@ int main()
             }
             else if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
                 done = true;
+
             if (redraw == true||first_redraw_ranking==true)
             {
                 redraw = false;
                 first_redraw_ranking = false;
-
-                readeFile(gameScores);
+                if (changeRankingFile)
+                {
+                    readeFile(gameScores);
+                    changeRankingFile = false;
+                    
+                }
                 al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, 0, ALLEGRO_ALIGN_CENTER, "LEADERBOARD");
 
                 for (int i = 0; i < 10; i++)
                     al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, (i + 1) * game_height / 10 - game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
-                al_draw_filled_rectangle(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, getColor(2));
+                    
+                
+                al_draw_filled_rectangle(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2,resetScoreboard.color);
                 al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboard.x1 + resetScoreboard.x2) / 2, (resetScoreboard.y1 + resetScoreboard.y2) / 2-5, ALLEGRO_ALIGN_CENTER, "RESET");
                 al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboard.x1 + resetScoreboard.x2) / 2, (resetScoreboard.y1 + resetScoreboard.y2) / 2+5, ALLEGRO_ALIGN_CENTER, "SCOREBOARD");
 
@@ -1328,7 +1307,7 @@ int main()
 
         }
 
-        //al_flush_event_queue(event_queue);
+       
        
     }
     al_destroy_display(display);
