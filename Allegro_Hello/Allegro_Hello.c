@@ -20,10 +20,10 @@ double wynik = 0;
 
 enum move { left, right, down, up, none };
 
-enum game_status{play, ranking};
+enum gameStatus{play, ranking};
 
 
-struct color
+struct color//struktura koloru
 {
     int value;
     ALLEGRO_COLOR color;
@@ -49,7 +49,7 @@ struct button //struktura przycisku
 
 
 
-void must_init(bool test, const char* description)
+void mustInit(bool test, const char* description)//funkcja służąca do inicjacji sprzętu
 {
     if (test) return;
 
@@ -152,7 +152,7 @@ void random_1(int t[4][4]) //losuje 2 wspolrzedne i wstawia w nie '2'
 
 
 
-void compress(int t[4][4], bool* changed)
+void compress(int t[4][4], bool* changed)//funkcja usuwająca zera pomiędzy elementami podczas przesuwania
 {
     int tempTab[4][4] =
     { 0,0,0,0,
@@ -174,8 +174,7 @@ void compress(int t[4][4], bool* changed)
             }
         }
     }
-    //printf("test 2\n");
-    //print(tempTab);
+    
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -190,15 +189,11 @@ void compress(int t[4][4], bool* changed)
     }
 
 
-    //printf("test 2.1\n");
-
-    //print(t);
-
 
 }
 
 
-int merge(int t[4][4], bool* changed, int* localScore)
+int merge(int t[4][4], bool* changed, int* localScore)//funkcja łącząca elementy tej samej wartości
 {
     int wynik2 = 0;
     int tempTab[4][4] = { 0,0,0,0,
@@ -221,7 +216,7 @@ int merge(int t[4][4], bool* changed, int* localScore)
 
 }
 
-void transpose(int t[4][4])
+void transpose(int t[4][4])//funkcja zmieniająca kierunek tablicy
 {
     int tempTab[4][4] = { 0,0,0,0,
                         0,0,0,0,
@@ -247,7 +242,7 @@ void transpose(int t[4][4])
 }
 
 
-void reverse(int t[4][4])
+void reverse(int t[4][4])// funkcja odwracająca tablicę
 {
     int tempTab[4][4] = { 0,0,0,0,
                         0,0,0,0,
@@ -273,22 +268,17 @@ void reverse(int t[4][4])
 
 
 
-bool left2(int t[4][4], int* localScore)
+bool left2(int t[4][4], int* localScore)//przesuwanie w lewo
 {
     bool changed = false;
 
-    // printf("Lmain test 2.1\n");
-    // print(t);
     compress(t, &changed);
-    //printf("Lmain test 2.2\n");
-   // print(t);
+   
     merge(t, &changed, *&localScore);
 
-    // printf("Lmain test 2.3\n");
-    // print(t);
+   
     compress(t, &changed);
-    // printf("Lmain test 2.4\n");
-    // print(t);
+   
     if (changed == true) {
         //random_1(t);
         return true;
@@ -298,26 +288,22 @@ bool left2(int t[4][4], int* localScore)
 
 
 
-bool right2(int t[4][4], int* localScore)
+bool right2(int t[4][4], int* localScore)//przesuwanie w prawo
 {
     bool changed = false;
 
     reverse(t);
-    //printf("Rmain test 2.1\n");
-    //print(t);
+  
     compress(t, &changed);
-    // printf("Rmain test 2.2\n");
-     //print(t);
+   
     merge(t, &changed, *&localScore);
 
-    //printf("Rmain test 2.3\n");
-    //print(t);
+    
     compress(t, &changed);
-    //printf("Rmain test 2.4\n");
-    //print(t);
+
     reverse(t);
     if (changed == true) {
-        //random_1(t);
+       
         return true;
     }
     return false;
@@ -326,32 +312,25 @@ bool right2(int t[4][4], int* localScore)
 
 
 
-bool down2(int t[4][4], int* localScore)
+bool down2(int t[4][4], int* localScore)//funkcja przesuwająca w dół
 {
     bool changed = false;
 
     transpose(t);
-    //printf("main test transpose\n");
-    //print(t);
+    
     reverse(t);
-    // printf("main test reverse\n");
-     //print(t);
+   
     compress(t, &changed);
-    // printf("main test compress\n");
-    // print(t);
+   
     merge(t, &changed, *&localScore);
 
-    // printf("main test merge\n");
-    // print(t);
+   
 
     compress(t, &changed);
-    // printf("main test compress\n");
-     //print(t);
-     //printf("main test 2.4\n");
-     //print(t);
+  
     reverse(t);
     transpose(t);
-    //printf("changed? %d", changed);
+   
     if (changed == true) {
         //random_1(t);
         return true;
@@ -361,7 +340,7 @@ bool down2(int t[4][4], int* localScore)
 
 }
 
-bool up2(int t[4][4], int* localScore)
+bool up2(int t[4][4], int* localScore)//funkcja przesuwająca w górę
 {
     bool changed = false;
 
@@ -386,7 +365,7 @@ bool up2(int t[4][4], int* localScore)
     return false;
 }
 
-bool isMoveValid(bool** operation(int*))
+bool isMoveValid(bool** operation(int*))//funkcja sprawdzająca czy ruch jest poprawny
 {
     if (*operation == true)
         return true;
@@ -395,7 +374,7 @@ bool isMoveValid(bool** operation(int*))
 }
 
 
-void move(int t[4][4], bool** operation(int*, int*))
+void move(int t[4][4], bool** operation(int*, int*))// funkcja do wykonania ruchu
 {
     int score = 0;
     if (operation(t, &score) == true) {
@@ -407,7 +386,7 @@ void move(int t[4][4], bool** operation(int*, int*))
 
 }
 
-void resetBoard(int t[4][4], struct gameScore *score)
+void resetBoard(int t[4][4], struct gameScore *score)//funkcja resetująca tablicę gry do stanu początkowego 
 {
     for (int i = 0; i < 4; i++)
     {
@@ -424,7 +403,7 @@ void resetBoard(int t[4][4], struct gameScore *score)
     random_1(t);
 }
 
-bool wygrana(int t[4][4])
+bool isGameWon(int t[4][4])//funkcja sprawdzająca czy gra została wygrana
 {
     for (int i = 0; i < 4; i++)
     {
@@ -442,7 +421,7 @@ bool wygrana(int t[4][4])
 
 
 
-bool isGameLost(int t[4][4])
+bool isGameLost(int t[4][4])//funkcja sprawdzająca czy gra została przegrana
 {
     int tempTab[4][4] = { 0,0,0,0,
                         0,0,0,0,
@@ -472,7 +451,7 @@ bool isGameLost(int t[4][4])
 }
 
 
-void writeFile(struct gameScore gameScoreArray[10])
+void writeFile(struct gameScore gameScoreArray[10])//funkcja zapisująca tablicę struktur wyników do pliku
 {
     FILE* fp;
     errno_t err;
@@ -501,7 +480,7 @@ void writeFile(struct gameScore gameScoreArray[10])
 }
 
 
-void readeFile(struct gameScore gameScoreArray[10])
+void readFile(struct gameScore gameScoreArray[10])// funkcja odczytująca do tablicy struktur zawartość pliku Ranking.txt
 {
     FILE* fp;
     errno_t err;
@@ -529,7 +508,7 @@ void readeFile(struct gameScore gameScoreArray[10])
 
 }
 
-void sortRankingArray(struct gameScore gameScoreArray[10])
+void sortRankingArray(struct gameScore gameScoreArray[10])//funkcja sortująca według odpowiednich wartości zawartość tablicy struktur 
 {
 
 
@@ -556,7 +535,7 @@ void sortRankingArray(struct gameScore gameScoreArray[10])
 
 }
 
-void updateRankingArray(struct gameScore gameScoreArray[10], struct gameScore localScore)
+void updateRankingArray(struct gameScore gameScoreArray[10], struct gameScore localScore)//funkcja służąca do aktualizacji tablicy struktur o nowy rekord
 {
     struct gameScore temp = { 0,0,0 };
     for (int i = 0; i < 10; i++)
@@ -597,7 +576,7 @@ void updateRankingArray(struct gameScore gameScoreArray[10], struct gameScore lo
 }
 
 
-void resetRanking(struct gameScore gameScoreArray[10])
+void resetRanking(struct gameScore gameScoreArray[10])// funkcja resetująca tablicę struktur 
 {
     for (int i = 0; i < 10; i++)
     {
@@ -610,7 +589,7 @@ void resetRanking(struct gameScore gameScoreArray[10])
 }
 
 
-int BothPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y,int p2x, int p2y )
+int bothPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y,int p2x, int p2y )//funkcja sprawdzająca czy kliknięcie miało miejsce w przycisku podczas kliknięcia przycisku oraz jego upuszczenia
 {
     printf("\nRECTANGLE: X1: %d X2: %d, Y1: %d Y2 %d\n", rect_x1, rect_x2, rect_y1, rect_y2);
     if (p1x >= rect_x1 && p1x <= rect_x2 && p1y >= rect_y1 && p1y <= rect_y2&& p2x >= rect_x1 && p2x <= rect_x2 && p2y >= rect_y1 && p2y <= rect_y2)
@@ -618,7 +597,7 @@ int BothPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x
     else
         return 0;
 }
-int StartingPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y)
+int startingPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int p1x, int p1y)//funkcja sprawdzająca czy kliknięcie miało miejsce w przycisku podczas kliknięcia przycisku
 {
     printf("\nRECTANGLE: X1: %d X2: %d, Y1: %d Y2 %d\n", rect_x1, rect_x2, rect_y1, rect_y2);
     if (p1x >= rect_x1 && p1x <= rect_x2 && p1y >= rect_y1 && p1y <= rect_y2 )
@@ -632,7 +611,7 @@ int StartingPointsInRect(int rect_x1, int rect_y1, int rect_x2, int rect_y2, int
 
 
 
-ALLEGRO_COLOR getColor(int value)
+ALLEGRO_COLOR getColor(int value)//Lista kolorów wykorzystywana do reprezentacji kolejnych liczb w tablicy
 {
     switch (value)
     {
@@ -666,7 +645,7 @@ ALLEGRO_COLOR getColor(int value)
 
 
 
-void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_FONT* font, int t[4][4], struct gameScore localScore, struct button resetButton)
+void drawGameBoard(ALLEGRO_DISPLAY* display, ALLEGRO_MONITOR_INFO info, ALLEGRO_FONT* font, int t[4][4], struct gameScore localScore, struct button resetButton)//funkcja służąca do rysowania tablicy gry
 {
     al_get_monitor_info(0, &info);
     int res_x_comp = info.x2 - info.x1;
@@ -775,7 +754,7 @@ int main()
 
 
     struct gameScore gameScores[10];
-    readeFile(gameScores);
+    readFile(gameScores);
     struct gameScore localScore = { 0,0,0 };
 
     writeFile(gameScores);
@@ -845,8 +824,8 @@ int main()
         return -1;
     }
 
-    must_init(al_install_keyboard(), "keyboard");
-    must_init(al_install_mouse(), "mouse");
+    mustInit(al_install_keyboard(), "keyboard");
+    mustInit(al_install_mouse(), "mouse");
 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     //ALLEGRO_EVENT_QUEUE* event_display_queue = al_create_event_queue();
@@ -858,21 +837,21 @@ int main()
     int actualTime = al_current_time(timer);
     int pos_x = 0, pos_y = 0;
 
-    enum game_status GAME_MODE = play;
-    struct button resetGameboard;
-    resetGameboard.x1 = (int)(game_width * 3 / 4);
-    resetGameboard.y1 = (int)(game_width + game_height / 40);
-    resetGameboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
-    resetGameboard.y2 = (int)(game_height - game_height / 40);
-    resetGameboard.color = getColor(2);
+    enum gameStatus GAME_MODE = play;
+    struct button resetGameboardButton;
+    resetGameboardButton.x1 = (int)(game_width * 3 / 4);
+    resetGameboardButton.y1 = (int)(game_width + game_height / 40);
+    resetGameboardButton.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
+    resetGameboardButton.y2 = (int)(game_height - game_height / 40);
+    resetGameboardButton.color = getColor(2);
 
-    struct button resetScoreboard;
+    struct button resetScoreboardButton;
 
-    resetScoreboard.x1 = (int)(game_width * 3 / 4);
-    resetScoreboard.y1 = (int)(game_width + game_height / 40);
-    resetScoreboard.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
-    resetScoreboard.y2 = (int)(game_height - game_height / 40 + 15);
-    resetScoreboard.color = getColor(2);
+    resetScoreboardButton.x1 = (int)(game_width * 3 / 4);
+    resetScoreboardButton.y1 = (int)(game_width + game_height / 40);
+    resetScoreboardButton.x2 = (int)(game_width * 3 / 4 + game_width * 1 / 5);
+    resetScoreboardButton.y2 = (int)(game_height - game_height / 40 + 15);
+    resetScoreboardButton.color = getColor(2);
     
 
     while (!done)
@@ -946,8 +925,8 @@ int main()
                 {
                     first_pos_x = pos_x;
                      first_pos_y = pos_y;
-                     if (StartingPointsInRect(resetGameboard.x1, resetGameboard.y1, resetGameboard.x2, resetGameboard.y2, first_pos_x, first_pos_y) == 1)
-                        resetGameboard.color = getColor(4);
+                     if (startingPointsInRect(resetGameboardButton.x1, resetGameboardButton.y1, resetGameboardButton.x2, resetGameboardButton.y2, first_pos_x, first_pos_y) == 1)
+                        resetGameboardButton.color = getColor(4);
                     printf("\nCLICK DOWN  X:%d Y:%d ", first_pos_x, first_pos_y);
                    // puts("1");
                    
@@ -985,12 +964,12 @@ int main()
                 //printf("\nCLICK UP X:%d Y:%d ", pos_x, pos_y);
                 if (events.mouse.button & 1)
                 {
-                    resetGameboard.color = getColor(2);
+                    resetGameboardButton.color = getColor(2);
                     int second_pos_x = pos_x;
                     int second_pos_y = pos_y;
                     printf("\nCLICK UP  X:%d Y:%d ", second_pos_x, second_pos_y);
 
-                    if (BothPointsInRect(resetGameboard.x1, resetGameboard.y1, resetGameboard.x2, resetGameboard.y2, first_pos_x, first_pos_y, second_pos_x, second_pos_y) == 1)
+                    if (bothPointsInRect(resetGameboardButton.x1, resetGameboardButton.y1, resetGameboardButton.x2, resetGameboardButton.y2, first_pos_x, first_pos_y, second_pos_x, second_pos_y) == 1)
                     {
 
                         puts("\ndamn it works\n");
@@ -1053,7 +1032,7 @@ int main()
                     al_clear_to_color(getColor(0));
 
                     GAME_MODE = ranking;
-                    //redraw = true;
+                
 
 
 
@@ -1089,13 +1068,13 @@ int main()
                 else if (key == up)
                     move(t, up2);
                 localScore.wynik = wynik;
-                drawGameBoard(display, info, fontWYNIK, t, localScore, resetGameboard);
+                drawGameBoard(display, info, fontWYNIK, t, localScore, resetGameboardButton);
 
                 if (key == up || key == down || key == right || key == left)
                 {
-                    if (wygrana(t) == true)
+                    if (isGameWon(t) == true)
                     {
-                        //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                        
                         al_clear_to_color(al_map_rgb(213, 196, 161));
 
                         al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "Y O U  W O N");
@@ -1115,7 +1094,7 @@ int main()
                     }
                     if (isGameLost(t) == true)
                     {
-                        //saveScoreBoard(wynik, minutesPassed, secondsPassed);
+                        
                         al_clear_to_color(al_map_rgb(213, 196, 161));
 
                         al_draw_text(score_board_font, al_map_rgb_f(0, 0, 0), game_width / 2, game_height / 2, ALLEGRO_ALIGN_CENTER, "G A M E  O V E R");
@@ -1147,32 +1126,6 @@ int main()
                 
             }
             
-
-
-            
-            /* al_draw_line(6, 0, 6, 406, al_map_rgb(0, 0, 0), 3); //rysujemy ramke
-             al_draw_line(106, 0, 106, 406, al_map_rgb(0, 0, 0), 3);
-             al_draw_line(206, 0, 206, 406, al_map_rgb(0, 0, 0), 3);
-             al_draw_line(306, 0, 306, 406, al_map_rgb(0, 0, 0), 3);
-             al_draw_line(406, 0, 406, 406, al_map_rgb(0, 0, 0), 3);
-             */
-           
-
-            /*
-            al_draw_line(6, 0, 406, 0, al_map_rgb(0, 0, 0), 3);
-            al_draw_line(6, 106, 406, 106, al_map_rgb(0, 0, 0), 3);
-            al_draw_line(6, 206, 406, 206, al_map_rgb(0, 0, 0), 3);
-            al_draw_line(6, 306, 406, 306, al_map_rgb(0, 0, 0), 3);
-            al_draw_line(6, 406, 406, 406, al_map_rgb(0, 0, 0), 3);
-            */
-
-
-
-
-
-           
-            //print(t);
-
 
 
 
@@ -1211,8 +1164,8 @@ int main()
                 {
                     first_pos_x = pos_x;
                     first_pos_y = pos_y;
-                    if (StartingPointsInRect(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, first_pos_x, first_pos_y) == 1)
-                        resetScoreboard.color = getColor(4);
+                    if (startingPointsInRect(resetScoreboardButton.x1, resetScoreboardButton.y1, resetScoreboardButton.x2, resetScoreboardButton.y2, first_pos_x, first_pos_y) == 1)
+                        resetScoreboardButton.color = getColor(4);
 
 
 
@@ -1228,14 +1181,14 @@ int main()
                 
                 if (events.mouse.button & 1)
                 {
-                    resetScoreboard.color = getColor(2);
+                    resetScoreboardButton.color = getColor(2);
 
                     int second_pos_x = pos_x;
                     int second_pos_y = pos_y;
                    
                     printf("\nCLICK UP  X:%d Y:%d ", second_pos_x, second_pos_y);
 
-                    if (BothPointsInRect(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2, first_pos_x, first_pos_y, second_pos_x, second_pos_y) == 1)
+                    if (bothPointsInRect(resetScoreboardButton.x1, resetScoreboardButton.y1, resetScoreboardButton.x2, resetScoreboardButton.y2, first_pos_x, first_pos_y, second_pos_x, second_pos_y) == 1)
                     {
                         resetRanking(gameScores);
                         writeFile(gameScores);
@@ -1276,7 +1229,7 @@ int main()
                 first_redraw_ranking = false;
                 if (changeRankingFile)
                 {
-                    readeFile(gameScores);
+                    readFile(gameScores);
                     changeRankingFile = false;
                     
                 }
@@ -1286,9 +1239,9 @@ int main()
                     al_draw_textf(score_board_font, al_map_rgb(0, 0, 0), game_width / 2, (i + 1) * game_height / 10 - game_height / 20, ALLEGRO_ALIGN_CENTER, "SCORE: %d TIMER: %d min %.2d sec", gameScores[i].wynik, gameScores[i].gameTimeMin, gameScores[i].gameTimeSec);
                     
                 
-                al_draw_filled_rectangle(resetScoreboard.x1, resetScoreboard.y1, resetScoreboard.x2, resetScoreboard.y2,resetScoreboard.color);
-                al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboard.x1 + resetScoreboard.x2) / 2, (resetScoreboard.y1 + resetScoreboard.y2) / 2-5, ALLEGRO_ALIGN_CENTER, "RESET");
-                al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboard.x1 + resetScoreboard.x2) / 2, (resetScoreboard.y1 + resetScoreboard.y2) / 2+5, ALLEGRO_ALIGN_CENTER, "SCOREBOARD");
+                al_draw_filled_rectangle(resetScoreboardButton.x1, resetScoreboardButton.y1, resetScoreboardButton.x2, resetScoreboardButton.y2,resetScoreboardButton.color);
+                al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboardButton.x1 + resetScoreboardButton.x2) / 2, (resetScoreboardButton.y1 + resetScoreboardButton.y2) / 2-5, ALLEGRO_ALIGN_CENTER, "RESET");
+                al_draw_text(F1, al_map_rgb(0, 0, 0), (resetScoreboardButton.x1 + resetScoreboardButton.x2) / 2, (resetScoreboardButton.y1 + resetScoreboardButton.y2) / 2+5, ALLEGRO_ALIGN_CENTER, "SCOREBOARD");
 
                 al_flip_display();
 
